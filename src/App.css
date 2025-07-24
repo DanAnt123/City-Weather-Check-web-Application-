@@ -91,3 +91,9 @@ p {
         padding: 40px 20%;
     }
 }
+
+/* Spinner animation for refresh indicator */
+@keyframes spin {
+    0%   { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}

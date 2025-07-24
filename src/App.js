@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { fetchWeather } from './api/fetchWeather';
 import { computeComfortScore } from './utils/comfortScore';
 import './App.css';
@@ -44,19 +44,70 @@ const tooltipText = `The "Can I Go Outside?" score is calculated from:
 Score 10 = most comfortable, 1 = least comfortable.
 `;
 
+const AUTO_REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes in milliseconds
+
 const App = () => {
     const [query, setQuery] = useState('');
     const [weather, setWeather] = useState('');
-    // UI state for tooltip display
     const [showTooltip, setShowTooltip] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false); // For refresh indicator
+    const [lastUpdated, setLastUpdated] = useState(null); // Optional: display last refresh time
 
+    // Ref for interval id to allow cleanup
+    const intervalId = useRef(null);
+
+    // PUBLIC_INTERFACE
+    // Search function to fetch weather data for query
     const search = async (e) => {
         if (e.key === 'Enter') {
+            setIsRefreshing(true);
             const data = await fetchWeather(query);
             setWeather(data);
             setQuery('');
+            setLastUpdated(new Date());
+            setIsRefreshing(false);
         }
     };
+
+    // PUBLIC_INTERFACE
+    // Function to refresh weather for currently selected city (for auto-refresh)
+    const refreshWeather = async () => {
+        if (!weather || !weather.name) return;
+        setIsRefreshing(true);
+        try {
+            const data = await fetchWeather(weather.name);
+            setWeather(data);
+            setLastUpdated(new Date());
+        } catch (err) {
+            // Optionally add error handling/notification
+        }
+        setIsRefreshing(false);
+    };
+
+    // Set up auto-refresh every 5 minutes when weather (city) is selected
+    useEffect(() => {
+        if (weather && weather.name) {
+            // Immediately clear any existing interval if city changes
+            if (intervalId.current) {
+                clearInterval(intervalId.current);
+            }
+            // Set up interval for auto-refresh
+            intervalId.current = setInterval(() => {
+                refreshWeather();
+            }, AUTO_REFRESH_INTERVAL);
+
+            // Cleanup on city change or unmount
+            return () => {
+                if (intervalId.current) {
+                    clearInterval(intervalId.current);
+                }
+            };
+        } else {
+            // If weather/city not selected, make sure to clear interval
+            if (intervalId.current) clearInterval(intervalId.current);
+        }
+    // Should reset/ref whenever city changes
+    }, [weather && weather.name]);
 
     // Estimate additional data for comfort score using available fields
     let canGoScore = null, scoreFactors;
@@ -103,6 +154,40 @@ const App = () => {
                     <div className="city-temp">
                         {Math.round((weather.main.temp) - 273.15)}
                         <sup>&deg;C</sup>
+                    </div>
+                    <div style={{ textAlign: "right", fontSize: "0.97em", marginBottom: 10 }}>
+                        <span style={{ 
+                            color: "#1388e2", 
+                            fontWeight: 500, 
+                            background: "#e7f2fc",
+                            borderRadius: "10px",
+                            padding: "3px 12px",
+                            marginRight: 7,
+                            display: "inline-block",
+                            verticalAlign: "middle"
+                        }}>
+                            🔄 Auto-refresh: <b>ON</b> <span style={{fontSize: "1.1em"}} title="Weather data will update every 5 minutes">⏰</span>
+                            {isRefreshing && <span style={{
+                                marginLeft: 9,
+                                fontSize: "1em",
+                                fontWeight: 400
+                            }}>
+                                <span className="spin" style={{
+                                    display: "inline-block",
+                                    width: "0.95em",
+                                    height: "0.95em",
+                                    border: "2.2px solid #24a0ed",
+                                    borderTop: "2.2px solid #deeefa",
+                                    borderRadius: "50%",
+                                    animation: "spin 1s linear infinite",
+                                    verticalAlign: "middle"
+                                }}></span>
+                                &nbsp;Refreshing...
+                            </span>}
+                        </span>
+                        <span style={{ color: "#666", marginLeft: 13 }}>
+                            <span>Last updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Now'}</span>
+                        </span>
                     </div>
                     <div className="info">
                         <img className="city-icon" src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].description} />
