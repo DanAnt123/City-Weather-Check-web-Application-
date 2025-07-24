@@ -59,17 +59,17 @@ const ForecastPanel = ({ currentWeather, isVisible }) => {
     if (!isVisible) return null;
 
     return (
-        <div className="glass-card p-8 mt-8 max-w-[520px] w-full animate-slide-up">
+        <div className="forecast-panel animate-slide-up">
             <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-                <h2 className="text-2xl font-bold text-text-primary m-0 bg-gradient-to-r from-white to-blue-50 bg-clip-text text-transparent">
+                <h2 className="text-2xl md:text-3xl font-bold text-text-primary m-0 bg-gradient-to-r from-white via-blue-50 to-blue-100 bg-clip-text text-transparent">
                     Weather Forecast
                 </h2>
-                <div className="flex bg-white/10 rounded-3xl p-2 gap-2">
+                <div className="forecast-tabs">
                     <button
-                        className={`flex items-center gap-2 py-3 px-5 border-none rounded-2xl font-medium text-sm cursor-pointer transition-all duration-300 font-manrope ${
+                        className={`forecast-tab ${
                             activeTab === 'hourly' 
-                                ? 'bg-white/15 text-text-primary shadow-lg' 
-                                : 'bg-transparent text-text-secondary hover:bg-white/8 hover:text-text-primary'
+                                ? 'forecast-tab-active' 
+                                : 'forecast-tab-inactive'
                         }`}
                         onClick={() => setActiveTab('hourly')}
                     >
@@ -80,10 +80,10 @@ const ForecastPanel = ({ currentWeather, isVisible }) => {
                         Hourly
                     </button>
                     <button
-                        className={`flex items-center gap-2 py-3 px-5 border-none rounded-2xl font-medium text-sm cursor-pointer transition-all duration-300 font-manrope ${
+                        className={`forecast-tab ${
                             activeTab === 'weekly' 
-                                ? 'bg-white/15 text-text-primary shadow-lg' 
-                                : 'bg-transparent text-text-secondary hover:bg-white/8 hover:text-text-primary'
+                                ? 'forecast-tab-active' 
+                                : 'forecast-tab-inactive'
                         }`}
                         onClick={() => setActiveTab('weekly')}
                     >
@@ -104,7 +104,7 @@ const ForecastPanel = ({ currentWeather, isVisible }) => {
                         <div className="flex gap-4 overflow-x-auto py-4 scrollbar-none" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                             <style jsx>{`.scrollbar-none::-webkit-scrollbar { display: none; }`}</style>
                             {hourlyData.slice(0, 12).map((hour, index) => (
-                                <div key={index} className="min-w-[120px] flex flex-col items-center gap-4 p-6 bg-white/5 border border-white/8 rounded-3xl transition-all duration-300 cursor-pointer hover:bg-white/10 hover:border-white/15 hover:-translate-y-1 hover:shadow-lg">
+                                <div key={index} className="min-w-[120px] flex flex-col items-center gap-4 forecast-item">
                                     <div className="text-sm font-semibold text-text-secondary">{hour.time}</div>
                                     <div className="w-12 h-12">
                                         <WeatherIcon 
@@ -139,7 +139,7 @@ const ForecastPanel = ({ currentWeather, isVisible }) => {
                 {activeTab === 'weekly' && (
                     <div className="flex flex-col gap-4">
                         {weeklyData.map((day, index) => (
-                            <div key={index} className="grid grid-cols-1 md:grid-cols-4 items-center gap-6 p-6 bg-white/5 border border-white/8 rounded-3xl transition-all duration-300 cursor-pointer hover:bg-white/10 hover:border-white/15 hover:translate-x-1 hover:shadow-lg">
+                            <div key={index} className="forecast-item-weekly">
                                 <div className="flex flex-col gap-1">
                                     <div className="text-base font-semibold text-text-primary">{day.day}</div>
                                     <div className="text-sm text-text-muted">{day.date}</div>

@@ -78,18 +78,21 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
 
     return (
         <div className="flex justify-center my-8 animate-fade-in" style={{ animationDelay: '1.4s', animationFillMode: 'both' }}>
+            {showTooltip && <div className="tooltip-overlay md:hidden" onClick={() => setShowTooltip(false)}></div>}
             <div 
-                className="relative flex flex-col items-center gap-6 p-8 glass-card cursor-pointer transition-all duration-400 outline-none min-w-[280px] hover:transform hover:-translate-y-2 hover:scale-[1.02] hover:border-white/20 hover:bg-white/12 hover:shadow-luxury-hover focus:outline-2 focus:outline-green-500 focus:outline-offset-4"
+                className="comfort-score-card cursor-pointer transition-all duration-400 outline-none focus:outline-2 focus:outline-green-500 focus:outline-offset-4"
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
                 onFocus={() => setShowTooltip(true)}
                 onBlur={() => setShowTooltip(false)}
+                onClick={() => setShowTooltip(!showTooltip)}
                 tabIndex="0"
                 role="button"
                 aria-label={`Comfort score: ${score} out of 10. Press to see details.`}
             >
-                <div className="relative flex items-center justify-center">
-                    <svg className="transform -rotate-90 drop-shadow-md" width="120" height="120" viewBox="0 0 100 100">
+                <div className="flex flex-col items-center gap-6 p-8">
+                <div className="relative flex items-center justify-center comfort-score-ring">
+                    <svg className="transform -rotate-90" width="120" height="120" viewBox="0 0 100 100">
                         {/* Background ring */}
                         <circle
                             cx="50"
@@ -140,13 +143,14 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                     </div>
                 </div>
                 
-                <div className="text-center max-w-60">
-                    <h3 className="text-xl font-bold text-text-primary m-0 mb-2 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                <div className="comfort-score-content max-w-60">
+                    <h3 className="comfort-score-title">
                         Can I Go Outside?
                     </h3>
-                    <p className="text-sm font-medium text-text-secondary m-0 leading-normal">
+                    <p className="comfort-score-description">
                         {getScoreDescription(score)}
                     </p>
+                </div>
                 </div>
 
                 {showTooltip && (
@@ -156,7 +160,7 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                                 How is this score computed?
                             </h4>
                             <button 
-                                className="w-8 h-8 border-none rounded-full bg-primary/10 text-primary cursor-pointer flex items-center justify-center transition-all duration-300 hover:bg-primary/20 hover:scale-110"
+                                className="tooltip-close-enhanced"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setShowTooltip(false);

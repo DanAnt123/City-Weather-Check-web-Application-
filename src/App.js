@@ -210,8 +210,8 @@ const App = () => {
 
                             {/* Weather details in improved grid */}
                             <div className="weather-details-improved">
-                                <div className="detail-card-improved">
-                                    <svg className="detail-icon" viewBox="0 0 24 24" fill="none">
+                                <div className="detail-card-improved group">
+                                    <svg className="detail-icon group-hover:animate-pulse" viewBox="0 0 24 24" fill="none">
                                         <path d="M14 4.5V9a3 3 0 0 0 3 3h4.5" stroke="currentColor" strokeWidth="2"/>
                                         <path d="M12 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.5L12 2z" stroke="currentColor" strokeWidth="2"/>
                                     </svg>
@@ -223,21 +223,21 @@ const App = () => {
                                     </div>
                                 </div>
 
-                                <div className="detail-card-improved">
-                                    <svg className="detail-icon" viewBox="0 0 24 24" fill="none">
+                                <div className="detail-card-improved group">
+                                    <svg className="detail-icon group-hover:animate-pulse" viewBox="0 0 24 24" fill="none">
                                         <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" stroke="currentColor" strokeWidth="2"/>
                                         <path d="M9.6 4.6A2 2 0 1 1 11 8H2" stroke="currentColor" strokeWidth="2"/>
                                     </svg>
                                     <div className="detail-content">
-                                        <span className="detail-label">Wind</span>
+                                        <span className="detail-label">Wind Speed</span>
                                         <span className="detail-value">
                                             {weather.wind?.speed || 0} m/s
                                         </span>
                                     </div>
                                 </div>
 
-                                <div className="detail-card-improved">
-                                    <svg className="detail-icon" viewBox="0 0 24 24" fill="none">
+                                <div className="detail-card-improved group">
+                                    <svg className="detail-icon group-hover:animate-pulse" viewBox="0 0 24 24" fill="none">
                                         <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5C2 10.79 3.51 12.54 5 14Z" stroke="currentColor" strokeWidth="2"/>
                                     </svg>
                                     <div className="detail-content">
@@ -248,8 +248,8 @@ const App = () => {
                                     </div>
                                 </div>
 
-                                <div className="detail-card-improved">
-                                    <svg className="detail-icon" viewBox="0 0 24 24" fill="none">
+                                <div className="detail-card-improved group">
+                                    <svg className="detail-icon group-hover:animate-pulse" viewBox="0 0 24 24" fill="none">
                                         <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2"/>
                                         <path d="M12 2v2" stroke="currentColor" strokeWidth="2"/>
                                         <path d="M12 20v2" stroke="currentColor" strokeWidth="2"/>
