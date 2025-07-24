@@ -5,7 +5,7 @@ import SearchBar from './components/shared/SearchBar';
 import WeatherIcon from './components/shared/WeatherIcon';
 import ComfortScore from './components/shared/ComfortScore';
 import ForecastPanel from './components/forecast/ForecastPanel';
-import './App.css';
+import './tailwind.css';
 
 /**
  * Returns a guessed UV index based on cloudiness and weather condition (fallback for demo)

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import WeatherIcon from '../shared/WeatherIcon';
-import './ForecastPanel.css';
 
 // PUBLIC_INTERFACE
 /**
@@ -60,25 +59,35 @@ const ForecastPanel = ({ currentWeather, isVisible }) => {
     if (!isVisible) return null;
 
     return (
-        <div className="forecast-panel">
-            <div className="forecast-header">
-                <h2 className="forecast-title">Weather Forecast</h2>
-                <div className="forecast-tabs">
+        <div className="glass-card p-8 mt-8 max-w-[520px] w-full animate-slide-up">
+            <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
+                <h2 className="text-2xl font-bold text-text-primary m-0 bg-gradient-to-r from-white to-blue-50 bg-clip-text text-transparent">
+                    Weather Forecast
+                </h2>
+                <div className="flex bg-white/10 rounded-3xl p-2 gap-2">
                     <button
-                        className={`tab-button ${activeTab === 'hourly' ? 'active' : ''}`}
+                        className={`flex items-center gap-2 py-3 px-5 border-none rounded-2xl font-medium text-sm cursor-pointer transition-all duration-300 font-manrope ${
+                            activeTab === 'hourly' 
+                                ? 'bg-white/15 text-text-primary shadow-lg' 
+                                : 'bg-transparent text-text-secondary hover:bg-white/8 hover:text-text-primary'
+                        }`}
                         onClick={() => setActiveTab('hourly')}
                     >
-                        <svg className="tab-icon" viewBox="0 0 24 24" fill="none">
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
                             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
                             <polyline points="12,6 12,12 16,14" stroke="currentColor" strokeWidth="2"/>
                         </svg>
                         Hourly
                     </button>
                     <button
-                        className={`tab-button ${activeTab === 'weekly' ? 'active' : ''}`}
+                        className={`flex items-center gap-2 py-3 px-5 border-none rounded-2xl font-medium text-sm cursor-pointer transition-all duration-300 font-manrope ${
+                            activeTab === 'weekly' 
+                                ? 'bg-white/15 text-text-primary shadow-lg' 
+                                : 'bg-transparent text-text-secondary hover:bg-white/8 hover:text-text-primary'
+                        }`}
                         onClick={() => setActiveTab('weekly')}
                     >
-                        <svg className="tab-icon" viewBox="0 0 24 24" fill="none">
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
                             <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" strokeWidth="2"/>
                             <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" strokeWidth="2"/>
@@ -89,30 +98,31 @@ const ForecastPanel = ({ currentWeather, isVisible }) => {
                 </div>
             </div>
 
-            <div className="forecast-content">
+            <div className="min-h-[300px]">
                 {activeTab === 'hourly' && (
-                    <div className="hourly-forecast">
-                        <div className="forecast-scroll-container">
+                    <div className="overflow-hidden">
+                        <div className="flex gap-4 overflow-x-auto py-4 scrollbar-none" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                            <style jsx>{`.scrollbar-none::-webkit-scrollbar { display: none; }`}</style>
                             {hourlyData.slice(0, 12).map((hour, index) => (
-                                <div key={index} className="hourly-item">
-                                    <div className="hour-time">{hour.time}</div>
-                                    <div className="hour-icon">
+                                <div key={index} className="min-w-[120px] flex flex-col items-center gap-4 p-6 bg-white/5 border border-white/8 rounded-3xl transition-all duration-300 cursor-pointer hover:bg-white/10 hover:border-white/15 hover:-translate-y-1 hover:shadow-lg">
+                                    <div className="text-sm font-semibold text-text-secondary">{hour.time}</div>
+                                    <div className="w-12 h-12">
                                         <WeatherIcon 
                                             weatherCode={hour.condition} 
                                             size="small" 
                                             animated={false}
                                         />
                                     </div>
-                                    <div className="hour-temp">{hour.temp}°</div>
-                                    <div className="hour-details">
-                                        <div className="precipitation">
-                                            <svg viewBox="0 0 24 24" fill="none">
+                                    <div className="text-xl font-bold text-text-primary">{hour.temp}°</div>
+                                    <div className="flex flex-col gap-2 w-full">
+                                        <div className="flex items-center gap-2 text-xs text-text-secondary">
+                                            <svg className="w-3 h-3 text-accent-blue/80" viewBox="0 0 24 24" fill="none">
                                                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5C2 10.79 3.51 12.54 5 14Z" stroke="currentColor" strokeWidth="2"/>
                                             </svg>
                                             <span>{hour.precipitation}%</span>
                                         </div>
-                                        <div className="wind">
-                                            <svg viewBox="0 0 24 24" fill="none">
+                                        <div className="flex items-center gap-2 text-xs text-text-secondary">
+                                            <svg className="w-3 h-3 text-accent-blue/80" viewBox="0 0 24 24" fill="none">
                                                 <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" stroke="currentColor" strokeWidth="2"/>
                                                 <path d="M9.6 4.6A2 2 0 1 1 11 8H2" stroke="currentColor" strokeWidth="2"/>
                                                 <path d="M12.6 19.4A2 2 0 1 0 14 16H2" stroke="currentColor" strokeWidth="2"/>
@@ -127,36 +137,42 @@ const ForecastPanel = ({ currentWeather, isVisible }) => {
                 )}
 
                 {activeTab === 'weekly' && (
-                    <div className="weekly-forecast">
+                    <div className="flex flex-col gap-4">
                         {weeklyData.map((day, index) => (
-                            <div key={index} className="weekly-item">
-                                <div className="day-info">
-                                    <div className="day-name">{day.day}</div>
-                                    <div className="day-date">{day.date}</div>
+                            <div key={index} className="grid grid-cols-1 md:grid-cols-4 items-center gap-6 p-6 bg-white/5 border border-white/8 rounded-3xl transition-all duration-300 cursor-pointer hover:bg-white/10 hover:border-white/15 hover:translate-x-1 hover:shadow-lg">
+                                <div className="flex flex-col gap-1">
+                                    <div className="text-base font-semibold text-text-primary">{day.day}</div>
+                                    <div className="text-sm text-text-muted">{day.date}</div>
                                 </div>
                                 
-                                <div className="day-weather">
-                                    <WeatherIcon 
-                                        weatherCode={day.condition} 
-                                        size="medium" 
-                                        animated={false}
-                                    />
-                                    <div className="weather-desc">{day.description}</div>
-                                </div>
-                                
-                                <div className="day-temps">
-                                    <div className="high-temp">{day.highTemp}°</div>
-                                    <div className="temp-bar">
-                                        <div className="temp-range" style={{
-                                            background: `linear-gradient(90deg, #4FC3F7 0%, #FFA726 ${day.precipitation}%, #FF7043 100%)`
-                                        }}></div>
+                                <div className="flex items-center gap-4">
+                                    <div className="w-15 h-15">
+                                        <WeatherIcon 
+                                            weatherCode={day.condition} 
+                                            size="medium" 
+                                            animated={false}
+                                        />
                                     </div>
-                                    <div className="low-temp">{day.lowTemp}°</div>
+                                    <div className="text-sm font-medium text-text-secondary">{day.description}</div>
                                 </div>
                                 
-                                <div className="day-details">
-                                    <div className="detail-item">
-                                        <svg viewBox="0 0 24 24" fill="none">
+                                <div className="flex items-center gap-4 min-w-[140px]">
+                                    <div className="text-lg font-bold text-text-primary min-w-[40px] text-right">{day.highTemp}°</div>
+                                    <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden min-w-[60px]">
+                                        <div 
+                                            className="h-full rounded-full"
+                                            style={{
+                                                background: `linear-gradient(90deg, #4FC3F7 0%, #FFA726 ${day.precipitation}%, #FF7043 100%)`,
+                                                width: '100%'
+                                            }}
+                                        ></div>
+                                    </div>
+                                    <div className="text-base font-medium text-text-muted min-w-[40px]">{day.lowTemp}°</div>
+                                </div>
+                                
+                                <div className="flex justify-center">
+                                    <div className="flex items-center gap-2 text-sm text-text-secondary">
+                                        <svg className="w-4 h-4 text-accent-blue/80" viewBox="0 0 24 24" fill="none">
                                             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5C2 10.79 3.51 12.54 5 14Z" stroke="currentColor" strokeWidth="2"/>
                                         </svg>
                                         <span>{day.precipitation}%</span>
@@ -168,8 +184,8 @@ const ForecastPanel = ({ currentWeather, isVisible }) => {
                 )}
             </div>
 
-            <div className="forecast-note">
-                <svg className="info-icon" viewBox="0 0 24 24" fill="none">
+            <div className="flex items-start gap-3 mt-8 p-5 bg-yellow-400/10 border border-yellow-400/20 rounded-2xl text-sm text-text-secondary leading-relaxed">
+                <svg className="w-[18px] h-[18px] text-yellow-400/80 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
                     <path d="M9,9h6v6H9V9z" fill="currentColor"/>
                     <path d="M9,7h6v1H9V7z" fill="currentColor"/>

@@ -1,5 +1,5 @@
 import React from 'react';
-import './WeatherIcon.css';
+// No longer need separate CSS file - using Tailwind classes
 
 // PUBLIC_INTERFACE
 /**
@@ -206,19 +206,40 @@ const WeatherIcon = ({ weatherCode, description, size = 'large', animated = true
         );
     };
 
+    const sizeClasses = {
+        small: 'w-20 h-20',
+        medium: 'w-30 h-30',
+        large: 'w-40 h-40'
+    };
+
     return (
-        <div className={`weather-icon-container ${size} ${animated ? 'animated' : ''}`}>
-            <div className="icon-wrapper">
-                {getCustomIcon()}
-                <div className="icon-glow"></div>
+        <div className={`relative inline-block ${sizeClasses[size]} drop-shadow-lg group`}>
+            <div className="relative w-full h-full flex items-center justify-center">
+                <div className={`w-full h-full transition-transform duration-300 ${animated ? 'animate-float' : ''} group-hover:scale-105`}>
+                    {getCustomIcon()}
+                </div>
+                {/* Glow effect */}
+                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full opacity-0 transition-opacity duration-300 pointer-events-none ${getGlowClass(weatherCode)} group-hover:opacity-30`}></div>
             </div>
             {description && (
-                <div className="weather-description-overlay">
+                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm py-2 px-4 rounded-2xl text-xs font-medium text-gray-700 whitespace-nowrap opacity-0 transition-all duration-300 pointer-events-none shadow-lg group-hover:opacity-100 group-hover:-translate-y-1">
                     {description}
                 </div>
             )}
         </div>
     );
+};
+
+// Helper function to get glow class based on weather condition
+const getGlowClass = (weatherCode) => {
+    const code = weatherCode?.toLowerCase() || '';
+    
+    if (code.includes('clear')) return 'bg-gradient-radial from-yellow-400/40 via-orange-400/20 to-transparent';
+    if (code.includes('cloud')) return 'bg-gradient-radial from-gray-300/40 via-gray-400/20 to-transparent';
+    if (code.includes('rain')) return 'bg-gradient-radial from-blue-400/40 via-blue-500/20 to-transparent';
+    if (code.includes('thunder')) return 'bg-gradient-radial from-yellow-300/40 via-yellow-400/20 to-transparent';
+    if (code.includes('snow')) return 'bg-gradient-radial from-white/40 via-gray-200/20 to-transparent';
+    return 'bg-gradient-radial from-blue-400/40 via-blue-500/20 to-transparent';
 };
 
 export default WeatherIcon;

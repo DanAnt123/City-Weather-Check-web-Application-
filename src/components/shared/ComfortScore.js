@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './ComfortScore.css';
 
 // PUBLIC_INTERFACE
 /**
@@ -78,9 +77,9 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
     if (!isVisible || !score) return null;
 
     return (
-        <div className="luxury-comfort-score">
+        <div className="flex justify-center my-8 animate-fade-in" style={{ animationDelay: '1.4s', animationFillMode: 'both' }}>
             <div 
-                className="score-container"
+                className="relative flex flex-col items-center gap-6 p-8 glass-card cursor-pointer transition-all duration-400 outline-none min-w-[280px] hover:transform hover:-translate-y-2 hover:scale-[1.02] hover:border-white/20 hover:bg-white/12 hover:shadow-luxury-hover focus:outline-2 focus:outline-green-500 focus:outline-offset-4"
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
                 onFocus={() => setShowTooltip(true)}
@@ -89,8 +88,8 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                 role="button"
                 aria-label={`Comfort score: ${score} out of 10. Press to see details.`}
             >
-                <div className="score-ring-container">
-                    <svg className="score-ring" width="120" height="120" viewBox="0 0 100 100">
+                <div className="relative flex items-center justify-center">
+                    <svg className="transform -rotate-90 drop-shadow-md" width="120" height="120" viewBox="0 0 100 100">
                         {/* Background ring */}
                         <circle
                             cx="50"
@@ -111,7 +110,7 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                             strokeLinecap="round"
                             strokeDasharray={circumference}
                             strokeDashoffset={strokeDashoffset}
-                            className={`progress-ring ${isAnimating ? 'animating' : ''}`}
+                            className={`transition-all duration-[1500ms] cubic-bezier-[0.4,0,0.2,1] ${isAnimating ? 'animate-pulse-soft' : ''}`}
                             transform="rotate(-90 50 50)"
                         />
                         {/* Glow effect */}
@@ -125,76 +124,85 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                             strokeLinecap="round"
                             strokeDasharray={circumference}
                             strokeDashoffset={strokeDashoffset}
-                            className="progress-glow"
+                            className="transition-all duration-[1500ms] cubic-bezier-[0.4,0,0.2,1] opacity-50 blur-sm animate-pulse"
                             transform="rotate(-90 50 50)"
-                            opacity="0.5"
                         />
                     </svg>
                     
-                    <div className="score-content">
-                        <div className="score-value">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                        <div className="text-4xl font-extrabold text-text-primary leading-none text-shadow-sm bg-gradient-to-r from-white to-blue-50 bg-clip-text text-transparent">
                             {Math.round(animatedScore * 10) / 10}
                         </div>
-                        <div className="score-max">/10</div>
-                        <div className="score-emoji">
+                        <div className="text-base font-medium text-text-secondary -mt-1">/10</div>
+                        <div className="text-2xl mt-1 animate-bounce-soft">
                             {getScoreEmoji(score)}
                         </div>
                     </div>
                 </div>
                 
-                <div className="score-label">
-                    <h3>Can I Go Outside?</h3>
-                    <p className="score-description">
+                <div className="text-center max-w-60">
+                    <h3 className="text-xl font-bold text-text-primary m-0 mb-2 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                        Can I Go Outside?
+                    </h3>
+                    <p className="text-sm font-medium text-text-secondary m-0 leading-normal">
                         {getScoreDescription(score)}
                     </p>
                 </div>
 
                 {showTooltip && (
-                    <div className="luxury-tooltip" role="tooltip">
-                        <div className="tooltip-header">
-                            <h4>How is this score computed?</h4>
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 -translate-y-full w-[420px] max-w-[90vw] bg-white/98 backdrop-blur-xl border border-white/30 rounded-3xl shadow-luxury z-[1000] overflow-hidden animate-slide-up" role="tooltip">
+                        <div className="flex items-center justify-between p-6 pb-0">
+                            <h4 className="text-lg font-bold text-gray-900 m-0 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                How is this score computed?
+                            </h4>
                             <button 
-                                className="tooltip-close"
+                                className="w-8 h-8 border-none rounded-full bg-primary/10 text-primary cursor-pointer flex items-center justify-center transition-all duration-300 hover:bg-primary/20 hover:scale-110"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setShowTooltip(false);
                                 }}
                                 aria-label="Close tooltip"
                             >
-                                <svg viewBox="0 0 24 24" fill="none">
+                                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
                                     <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2"/>
                                 </svg>
                             </button>
                         </div>
                         
-                        <div className="tooltip-body">
-                            <div className="tooltip-explanation">
+                        {/* Tooltip arrow */}
+                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-[14px] border-transparent border-t-white/98" style={{ filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1))' }}></div>
+                        
+                        <div className="p-4 pt-4 pb-6 text-gray-700">
+                            <div className="text-sm leading-relaxed mb-6 whitespace-pre-line text-gray-600">
                                 {tooltipContent}
                             </div>
                             
-                            <div className="factors-breakdown">
-                                <h5>Current Conditions</h5>
-                                <div className="factors-grid">
+                            <div>
+                                <h5 className="text-base font-semibold text-gray-700 m-0 mb-4 pb-2 border-b-2 border-primary/10">
+                                    Current Conditions
+                                </h5>
+                                <div className="grid gap-4">
                                     {factors && Object.entries(factors).map(([key, value]) => {
                                         const factorScore = getFactorScore(key, value);
                                         return (
-                                            <div key={key} className="factor-item">
-                                                <div className="factor-header">
-                                                    <span className="factor-name">{key}</span>
-                                                    <div className="factor-score-dots">
+                                            <div key={key} className="p-4 bg-primary/5 border border-primary/10 rounded-xl transition-all duration-300 hover:bg-primary/8 hover:border-primary/15 hover:-translate-y-1">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="font-semibold text-gray-700 text-sm">{key}</span>
+                                                    <div className="flex gap-1">
                                                         {[1, 2].map(dot => (
                                                             <div 
                                                                 key={dot}
-                                                                className={`score-dot ${dot <= factorScore ? 'active' : ''}`}
+                                                                className={`w-2 h-2 rounded-full transition-all duration-300 ${dot <= factorScore ? 'shadow-sm' : ''}`}
                                                                 style={{
-                                                                    backgroundColor: dot <= factorScore ? getScoreColor(factorScore * 5) : 'rgba(255,255,255,0.2)'
+                                                                    backgroundColor: dot <= factorScore ? getScoreColor(factorScore * 5) : 'rgba(255,255,255,0.2)',
+                                                                    boxShadow: dot <= factorScore ? `0 0 8px ${getScoreColor(factorScore * 5)}50` : 'none'
                                                                 }}
                                                             ></div>
                                                         ))}
                                                     </div>
                                                 </div>
-                                                <div className="factor-value">{value}</div>
-                                                <div className="factor-status">
+                                                <div className="text-lg font-bold text-primary mb-1">{value}</div>
+                                                <div className="text-xs font-medium opacity-80">
                                                     {getFactorStatus(key, value)}
                                                 </div>
                                             </div>
