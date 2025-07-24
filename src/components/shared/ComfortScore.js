@@ -90,7 +90,7 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                 role="button"
                 aria-label={`Comfort score: ${score} out of 10. Press to see details.`}
             >
-                <div className="flex flex-col items-center gap-6 p-8">
+                <div className="flex flex-col items-center gap-8 p-8 lg:p-10">
                 <div className="relative flex items-center justify-center comfort-score-ring">
                     <svg className="transform -rotate-90" width="120" height="120" viewBox="0 0 100 100">
                         {/* Background ring */}
@@ -133,21 +133,23 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                     </svg>
                     
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
-                        <div className="text-4xl font-extrabold text-text-primary leading-none text-shadow-sm bg-gradient-to-r from-white to-blue-50 bg-clip-text text-transparent">
-                            {Math.round(animatedScore * 10) / 10}
+                        <div className="text-4xl lg:text-5xl font-extrabold text-text-primary leading-none">
+                            <span className="bg-gradient-to-r from-white via-primary-50 to-primary-100 bg-clip-text text-transparent">
+                                {Math.round(animatedScore * 10) / 10}
+                            </span>
                         </div>
-                        <div className="text-base font-medium text-text-secondary -mt-1">/10</div>
-                        <div className="text-2xl mt-1 animate-bounce-soft">
+                        <div className="text-base font-medium text-text-tertiary -mt-1">/10</div>
+                        <div className="text-2xl mt-2 animate-bounce-soft">
                             {getScoreEmoji(score)}
                         </div>
                     </div>
                 </div>
                 
-                <div className="comfort-score-content max-w-60">
+                <div className="comfort-score-content max-w-72 text-center">
                     <h3 className="comfort-score-title">
                         Can I Go Outside?
                     </h3>
-                    <p className="comfort-score-description">
+                    <p className="body-base text-text-secondary leading-relaxed">
                         {getScoreDescription(score)}
                     </p>
                 </div>

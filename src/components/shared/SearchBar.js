@@ -96,12 +96,7 @@ const SearchBar = ({ onSearch, isLoading }) => {
     return (
         <div className="search-container">
             <div 
-                className={`relative flex items-center backdrop-blur-xl border rounded-[2rem] p-1.5 transition-all duration-300 shadow-glass overflow-hidden min-h-[3.5rem]
-                    ${isFocused 
-                        ? 'transform -translate-y-0.5 scale-[1.01] border-white/30 bg-white/15 shadow-glass-hover' 
-                        : 'border-white/20 bg-white/10'
-                    } 
-                    ${isLoading ? 'bg-accent-blue/15 border-accent-blue/30' : ''}`}
+                className={`search-input-container ${isFocused ? 'focused' : ''} ${isLoading ? 'loading' : ''}`}
                 role="combobox"
                 aria-expanded={showSuggestions}
                 aria-haspopup="listbox"
@@ -110,13 +105,13 @@ const SearchBar = ({ onSearch, isLoading }) => {
                 {/* Enhanced animated background shine */}
                 <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-all duration-500 ${isFocused ? 'transform translate-x-full' : '-translate-x-full'}`}></div>
                 
-                {/* Search icon with improved contrast */}
-                <div className="flex items-center justify-center w-12 h-12 mr-3 rounded-full bg-gradient-to-r from-primary to-secondary shadow-lg transition-all duration-300">
+                {/* Enhanced search icon */}
+                <div className="search-button">
                     {isLoading ? (
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" aria-label="Loading"></div>
+                        <div className="loading-spinner-enhanced" aria-label="Loading"></div>
                     ) : (
                         <svg 
-                            className={`w-5 h-5 text-white transition-transform duration-300 ${isFocused ? 'rotate-12' : ''}`} 
+                            className={`w-6 h-6 text-white transition-transform duration-300 ${isFocused ? 'rotate-12' : ''}`} 
                             viewBox="0 0 24 24" 
                             fill="none"
                             aria-hidden="true"
@@ -127,12 +122,12 @@ const SearchBar = ({ onSearch, isLoading }) => {
                     )}
                 </div>
                 
-                {/* Enhanced input with better contrast and accessibility */}
+                {/* Enhanced search input */}
                 <input
                     ref={inputRef}
                     type="text"
                     placeholder="Search for any city worldwide..."
-                    className="flex-1 bg-transparent border-none outline-none text-white text-lg font-normal font-manrope tracking-wide py-4 px-2 placeholder:text-white/60 placeholder:font-light focus:placeholder:text-white/40 selection:bg-white/20"
+                    className="search-input-enhanced"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={handleKeyPress}

@@ -207,22 +207,22 @@ const WeatherIcon = ({ weatherCode, description, size = 'large', animated = true
     };
 
     const sizeClasses = {
-        small: 'w-20 h-20',
-        medium: 'w-30 h-30',
-        large: 'w-40 h-40'
+        small: 'w-16 h-16 md:w-20 md:h-20',
+        medium: 'w-24 h-24 md:w-30 md:h-30',
+        large: 'w-32 h-32 md:w-40 md:h-40 lg:w-44 lg:h-44'
     };
 
     return (
-        <div className={`relative inline-block ${sizeClasses[size]} drop-shadow-lg group`}>
+        <div className={`relative inline-block ${sizeClasses[size]} drop-shadow-lg group cursor-pointer`}>
             <div className="relative w-full h-full flex items-center justify-center">
-                <div className={`w-full h-full transition-transform duration-300 ${animated ? 'animate-float' : ''} group-hover:scale-105`}>
+                <div className={`w-full h-full transition-all duration-400 ${animated ? 'animate-float' : ''} group-hover:scale-110 group-active:scale-95`}>
                     {getCustomIcon()}
                 </div>
-                {/* Glow effect */}
-                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full opacity-0 transition-opacity duration-300 pointer-events-none ${getGlowClass(weatherCode)} group-hover:opacity-30`}></div>
+                {/* Enhanced glow effect */}
+                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] rounded-full opacity-0 transition-all duration-400 pointer-events-none ${getGlowClass(weatherCode)} group-hover:opacity-40 group-hover:scale-110`}></div>
             </div>
             {description && (
-                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm py-2 px-4 rounded-2xl text-xs font-medium text-gray-700 whitespace-nowrap opacity-0 transition-all duration-300 pointer-events-none shadow-lg group-hover:opacity-100 group-hover:-translate-y-1">
+                <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-white/95 backdrop-blur-xl py-3 px-4 rounded-2xl text-xs font-medium text-gray-800 whitespace-nowrap opacity-0 transition-all duration-400 pointer-events-none shadow-premium border border-white/20 group-hover:opacity-100 group-hover:-translate-y-2 z-10">
                     {description}
                 </div>
             )}

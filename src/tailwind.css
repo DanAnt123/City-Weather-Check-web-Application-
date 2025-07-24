@@ -1,20 +1,39 @@
 /* ==========================================================================
-  Luxury Weather App – Utility-First Tailwind CSS Enhancements
-  - Modern glassmorphism, color, typographic, and responsive utility classes
-  - Custom animations and scalable UI foundations
-  - All core design tokens and component archetypes centralized here for clarity
+  Luxury Weather App – Enhanced Design System
+  - Modernized color palette with improved harmony and contrast
+  - Refined typography hierarchy for better readability
+  - Consistent spacing system and enhanced glassmorphism effects
+  - Comprehensive accessibility and responsive design improvements
 ========================================================================== */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Manrope:wght@200;300;400;500;600;700;800;900&display=swap');
 
 @layer base {
+  :root {
+    /* Enhanced CSS custom properties for consistent theming */
+    --primary-50: #f0f4ff;
+    --primary-500: #667eea;
+    --primary-600: #5a6dd8;
+    --secondary-500: #764ba2;
+    --accent-blue: #4fc3f7;
+    --accent-purple: #ba68c8;
+    --accent-pink: #f48fb1;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --text-primary: rgba(255, 255, 255, 0.98);
+    --text-secondary: rgba(255, 255, 255, 0.85);
+    --text-tertiary: rgba(255, 255, 255, 0.70);
+  }
+
   html, body, #root {
-    @apply font-manrope m-0 p-0 h-full overflow-x-hidden;
+    @apply font-body text-base leading-relaxed;
+    @apply m-0 p-0 h-full overflow-x-hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   
   * {
@@ -22,502 +41,507 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Enhanced focus styles for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary-400 ring-offset-2 ring-offset-transparent;
+  }
+
+  /* Improved selection styles */
+  ::selection {
+    @apply bg-primary-500/30 text-white;
+  }
 }
 
 @layer components {
-  /* ----------------------------------------------------------------------------
-    Main Container: Full viewport background, dynamic gradients, and accessibility
-  ---------------------------------------------------------------------------- */
+  /* ============================================================================
+    MAIN CONTAINER - Enhanced with better background and effects
+  ============================================================================ */
   .main-container {
-    @apply min-h-screen flex flex-col justify-center items-center p-8 relative bg-gradient-primary;
+    @apply min-h-screen flex flex-col justify-center items-center px-4 py-8 md:px-8 relative;
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
     background: 
-      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.8) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.8) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.7) 0%, transparent 50%),
-      linear-gradient(135deg, #1e3c72 0%, #2a5298 25%, #764ba2 50%, #f093fb 75%, #f5576c 100%);
+      radial-gradient(circle at 15% 85%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(244, 143, 177, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 45% 45%, rgba(79, 195, 247, 0.12) 0%, transparent 50%),
+      linear-gradient(135deg, 
+        #1e3c72 0%, 
+        #2a5298 20%, 
+        #667eea 40%, 
+        #764ba2 60%, 
+        #ba68c8 80%, 
+        #f48fb1 100%
+      );
     background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-    font-family: 'Manrope', 'Inter', sans-serif !important;
+    animation: gradientShift 25s ease infinite;
   }
 
   .main-container::before {
-    @apply absolute inset-0 pointer-events-none opacity-60;
     content: '';
+    @apply absolute inset-0 pointer-events-none opacity-40;
     background-image: 
-      radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
-      radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
-      radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
-      radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.3), transparent),
-      radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.2), transparent);
+      radial-gradient(1px 1px at 25px 35px, rgba(255,255,255,0.3), transparent),
+      radial-gradient(1px 1px at 55px 75px, rgba(255,255,255,0.2), transparent),
+      radial-gradient(2px 2px at 95px 45px, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 135px 85px, rgba(255,255,255,0.25), transparent),
+      radial-gradient(2px 2px at 165px 35px, rgba(255,255,255,0.3), transparent);
     background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: sparkle 20s linear infinite;
+    background-size: 200px 120px;
+    animation: sparkle 30s linear infinite;
   }
 
-  /* ----------------------------------------------------------------------------
-    Dynamic Weather Backgrounds (luxury gradients)
-  ---------------------------------------------------------------------------- */
-  .sunny-bg        { @apply bg-gradient-sunny; }
-  .cloudy-bg       { @apply bg-gradient-cloudy; }
-  .rainy-bg        { @apply bg-gradient-rainy; }
-  .stormy-bg       { @apply bg-gradient-stormy; }
-  .snowy-bg        { @apply bg-gradient-snowy;  }
+  /* Enhanced weather-specific backgrounds */
+  .sunny-bg { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 25%, #d97706 50%, #ea580c 75%, #dc2626 100%); }
+  .cloudy-bg { background: linear-gradient(135deg, #94a3b8 0%, #64748b 25%, #475569 50%, #334155 75%, #1e293b 100%); }
+  .rainy-bg { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 25%, #0369a1 50%, #075985 75%, #0c4a6e 100%); }
+  .stormy-bg { background: linear-gradient(135deg, #4c1d95 0%, #581c87 25%, #6b21a8 50%, #7c2d92 75%, #86198f 100%); }
+  .snowy-bg { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%); }
 
-  /* ----------------------------------------------------------------------------
-    Luxury Glass Card Base & Hover – for all major panels/cards
-  ---------------------------------------------------------------------------- */
+  /* ============================================================================
+    ENHANCED GLASS CARD SYSTEM
+  ============================================================================ */
+  .card-base {
+    @apply relative overflow-hidden;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
   .glass-card {
-    @apply backdrop-blur-xl border border-glass-border rounded-3xl shadow-glass px-8 py-8 md:px-12 md:py-12;
+    @apply card-base backdrop-blur-2xl border border-glass-border-light rounded-4xl shadow-luxury;
+    @apply px-6 py-6 md:px-10 md:py-10 lg:px-12 lg:py-12;
     background: rgba(255, 255, 255, 0.09);
-    transition: box-shadow 0.3s, border 0.3s, background 0.3s, transform 0.25s;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
-  .glass-card-hover {
-    @apply hover:shadow-glass-hover hover:-translate-y-2 hover:scale-[1.02]
-           hover:border-white/20 hover:bg-white/12;
-  }
-  /* Add to cards for scalable spacing/padding & hover:
-     Example: <div className="glass-card glass-card-hover ...">...</div>
-  */
 
-  /* ----------------------------------------------------------------------------
-    Dashboard Layout Structure - Semantic sections for better organization
-  ---------------------------------------------------------------------------- */
+  .glass-card-hover {
+    @apply hover:shadow-luxury-hover hover:-translate-y-3 hover:scale-[1.015];
+    @apply hover:border-glass-border-lighter hover:bg-white/12;
+  }
+
+  .glass-card-interactive {
+    @apply cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-400/50 focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply active:scale-[0.995] active:shadow-glass-active;
+  }
+
+  /* Enhanced glass card with premium styling */
+  .glass-card-premium {
+    @apply glass-card shadow-premium;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.12) 0%, 
+      rgba(255, 255, 255, 0.08) 50%, 
+      rgba(255, 255, 255, 0.04) 100%
+    );
+  }
+
+  .glass-card-premium::before {
+    content: '';
+    @apply absolute inset-0 rounded-4xl pointer-events-none opacity-60;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.1) 0%, 
+      transparent 40%, 
+      rgba(255, 255, 255, 0.05) 100%
+    );
+  }
+
+  /* ============================================================================
+    ENHANCED LAYOUT SYSTEM
+  ============================================================================ */
   .dashboard-header {
-    @apply w-full max-w-5xl mb-8 z-10;
+    @apply w-full max-w-6xl mb-8 lg:mb-12 z-10;
     animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .dashboard-main {
-    @apply w-full max-w-5xl flex flex-col lg:flex-row gap-8 items-start justify-center;
-  }
-
-  .welcome-main {
-    @apply w-full max-w-5xl flex justify-center items-center min-h-[400px];
+    @apply w-full max-w-6xl flex flex-col lg:flex-row gap-8 lg:gap-12 items-start justify-center;
   }
 
   .primary-weather-section {
-    @apply flex-1 max-w-2xl w-full;
+    @apply flex-1 max-w-3xl w-full;
   }
 
   .secondary-content-section {
-    @apply flex flex-col gap-8 w-full lg:w-96 lg:min-w-[384px];
+    @apply flex flex-col gap-8 lg:gap-10 w-full lg:w-96 lg:min-w-[400px];
   }
 
-  .comfort-score-container {
-    @apply w-full;
+  /* ============================================================================
+    ENHANCED TYPOGRAPHY SYSTEM
+  ============================================================================ */
+  .heading-display {
+    @apply font-display font-bold tracking-tight;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .forecast-container {
-    @apply w-full;
+  .heading-primary {
+    @apply text-3xl md:text-4xl lg:text-5xl heading-display text-text-primary;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.98) 0%, 
+      rgba(240, 244, 255, 0.9) 50%, 
+      rgba(199, 214, 254, 0.8) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  /* ----------------------------------------------------------------------------
-    Card/Panel/Widget Consistency (Weather Card, Detail Grids)
-  ---------------------------------------------------------------------------- */
+  .heading-secondary {
+    @apply text-xl md:text-2xl lg:text-3xl font-display font-semibold text-text-secondary;
+    letter-spacing: -0.025em;
+  }
+
+  .heading-tertiary {
+    @apply text-lg md:text-xl font-display font-medium text-text-tertiary;
+  }
+
+  .body-large {
+    @apply text-lg font-body font-normal text-text-secondary leading-relaxed;
+  }
+
+  .body-base {
+    @apply text-base font-body font-normal text-text-tertiary leading-relaxed;
+  }
+
+  .body-small {
+    @apply text-sm font-body font-medium text-text-muted;
+  }
+
+  .caption {
+    @apply text-xs font-body font-medium text-text-subtle uppercase tracking-wider;
+  }
+
+  /* ============================================================================
+    WEATHER CARD ENHANCEMENTS
+  ============================================================================ */
   .weather-card {
-    @apply glass-card glass-card-hover w-full text-center relative z-[5] overflow-hidden;
+    @apply glass-card-premium glass-card-hover w-full text-center relative z-[15];
     animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
-  .weather-card::before {
-    @apply absolute inset-0 pointer-events-none rounded-[2.5rem];
-    content: '';
-    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 55%, rgba(255,255,255,0.03) 100%);
-    z-index: 1;
-  }
 
-  /* ----------------------------------------------------------------------------
-    Enhanced Search Container with Mobile-First Design
-  ---------------------------------------------------------------------------- */
-  .search-container {
-    @apply relative z-10 w-full max-w-2xl mx-auto;
-    animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  /* Screen reader only content */
-  .sr-only {
-    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
-    clip: rect(0, 0, 0, 0);
-  }
-
-  /* Enhanced spinner with better visibility */
-  .search-spinner {
-    @apply animate-spin;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-  }
-=======
-  /* ----------------------------------------------------------------------------
-    Enhanced Search Container with Mobile-First Design and Accessibility
-  ---------------------------------------------------------------------------- */
-  .search-container {
-    @apply relative z-10 w-full max-w-2xl mx-auto;
-    animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  /* Screen reader only content for accessibility */
-  .sr-only {
-    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
-    clip: rect(0, 0, 0, 0);
-  }
-
-  /* Enhanced search input styling with better contrast */
-  .search-input-enhanced {
-    @apply bg-transparent border-none outline-none text-white text-lg font-normal font-manrope tracking-wide;
-    @apply placeholder:text-white/60 placeholder:font-light focus:placeholder:text-white/40;
-    @apply selection:bg-white/20;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Enhanced suggestion item styling */
-  .suggestion-item {
-    @apply flex items-center gap-3 py-4 px-4 rounded-xl text-sm font-medium cursor-pointer;
-    @apply transition-all duration-200 font-manrope min-h-[3rem] text-left w-full border-none;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-white/50;
-  }
-
-  .suggestion-item:hover {
-    @apply transform translate-x-1;
-  }
-
-  .suggestion-item:active {
-    @apply transform scale-[0.98];
-  }
-
-  /* Enhanced touch targets for mobile */
-  .touch-target {
-    @apply min-w-[3rem] min-h-[3rem];
-    touch-action: manipulation;
-  }
-
-  /* Enhanced spinner with better visibility */
-  .search-spinner {
-    @apply animate-spin;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-  }
-
-  /* Enhanced Mobile-First Tooltip System */
-  .luxury-tooltip {
-    @apply fixed md:absolute z-[9999] bg-white/98 backdrop-blur-xl border border-white/25 rounded-3xl shadow-luxury p-6 max-w-md w-[95vw] md:w-[420px]
-           text-sm text-gray-800 leading-relaxed animate-slide-up transition-all duration-300;
-    /* Mobile: fixed positioning for better viewport handling */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-  }
-
-  @media (min-width: 768px) {
-    .luxury-tooltip {
-      @apply absolute;
-      top: auto !important;
-      left: 50% !important;
-      transform: translateX(-50%) translateY(-100%) !important;
-    }
-  }
-
-  .luxury-tooltip-arrow {
-    @apply absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 hidden md:block;
-    border: 12px solid transparent;
-    border-top: 12px solid rgba(255, 255, 255, 0.98);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-  }
-
-  /* Mobile tooltip overlay */
-  .tooltip-overlay {
-    @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998] md:hidden;
-    animation: fadeIn 0.2s ease-out;
-  }
-
-  /* Enhanced tooltip close button for mobile */
-  .tooltip-close-enhanced {
-    @apply w-10 h-10 md:w-8 md:h-8 border-none rounded-full bg-primary/15 text-primary cursor-pointer flex items-center justify-center 
-           transition-all duration-300 hover:bg-primary/25 hover:scale-110 active:scale-95;
-    /* Larger touch target for mobile */
-  }
-
-  /* ----------------------------------------------------------------------------
-    Premium Typography for Headers/Values
-  ---------------------------------------------------------------------------- */
-  .font-heading {
-    @apply font-manrope font-extrabold tracking-tight;
-  }
-  .font-metric {
-    @apply font-inter font-bold tracking-wide text-2xl md:text-3xl lg:text-4xl;
-  }
-
-  /* Additional class improvements, corrections and spacing handled below ... (rest of file continues as before) */
-  /* ----------------------------------------------------------------------------
-    Improved City Header with Status Integration
-  ---------------------------------------------------------------------------- */
   .city-status-header {
-    @apply flex items-start justify-between mb-6 relative;
-  }
-
-  .city-header {
-    @apply flex-1;
+    @apply flex items-start justify-between mb-8 relative;
   }
 
   .city-name {
-    @apply text-3xl md:text-4xl font-bold text-text-primary m-0 flex items-center justify-start gap-3;
-    @apply tracking-tight drop-shadow-sm;
+    @apply heading-primary m-0 flex items-center justify-start gap-4;
     animation: scaleIn 0.6s ease-out 0.2s both;
   }
 
   .country-badge {
-    @apply bg-gradient-to-r from-accent-blue to-accent-purple text-white py-1.5 px-3 rounded-2xl;
-    @apply text-xs md:text-sm font-semibold tracking-wide shadow-lg;
+    @apply bg-gradient-to-r from-accent-blue-500 to-accent-purple-500 text-white py-2 px-4 rounded-2xl;
+    @apply text-xs md:text-sm font-semibold tracking-wide shadow-premium;
     animation: slideRight 0.6s ease-out 0.4s both;
   }
 
-  /* ----------------------------------------------------------------------------
-    Improved Temperature and Weather Display with Better Hierarchy
-  ---------------------------------------------------------------------------- */
   .weather-primary-display {
-    @apply mb-8 relative;
+    @apply mb-10 relative;
   }
 
   .temperature-icon-section {
-    @apply flex items-center justify-center gap-6 md:gap-8 mb-6;
+    @apply flex items-center justify-center gap-8 md:gap-12 mb-8;
   }
 
   .city-temp-improved {
-    @apply text-5xl md:text-6xl lg:text-7xl font-bold m-0 leading-none relative;
-    @apply bg-gradient-to-r from-white via-blue-50 to-blue-100 bg-clip-text text-transparent;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
-    animation: temperaturePulse 2s ease-in-out infinite, scaleIn 0.8s ease-out 0.6s both;
+    @apply text-6xl md:text-7xl lg:text-8xl font-display font-bold m-0 leading-none;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 1) 0%, 
+      rgba(240, 244, 255, 0.95) 30%, 
+      rgba(199, 214, 254, 0.9) 70%, 
+      rgba(165, 184, 252, 0.85) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+    animation: temperaturePulse 3s ease-in-out infinite, scaleIn 0.8s ease-out 0.6s both;
   }
 
   .temp-unit {
-    @apply text-lg md:text-xl font-light text-text-secondary ml-2 align-top;
-  }
-
-  .weather-icon-section {
-    @apply flex-shrink-0;
+    @apply text-2xl md:text-3xl font-light text-text-secondary ml-2 align-top;
   }
 
   .weather-description-improved {
-    @apply text-xl md:text-2xl lg:text-3xl font-semibold text-text-primary capitalize m-0 tracking-wide text-center;
-    @apply bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent;
-    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+    @apply heading-secondary capitalize m-0 text-center;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.95) 0%, 
+      rgba(240, 244, 255, 0.9) 50%, 
+      rgba(199, 214, 254, 0.85) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 12px rgba(255, 255, 255, 0.2);
     animation: fadeIn 0.6s ease-out 1s both;
   }
 
-  /* ----------------------------------------------------------------------------
-    Enhanced Weather Details Grid with Premium Card Design
-  ---------------------------------------------------------------------------- */
+  /* ============================================================================
+    ENHANCED WEATHER DETAILS GRID
+  ============================================================================ */
   .weather-details-improved {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-8 w-full;
+    @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-6 mt-10 w-full;
   }
 
   .detail-card-improved {
-    @apply flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 backdrop-blur-md;
+    @apply flex items-center gap-4 lg:gap-5 p-5 lg:p-6 rounded-3xl backdrop-blur-2xl;
     @apply bg-gradient-to-br from-white/12 via-white/8 to-white/4;
     @apply border border-white/15 shadow-glass;
+    @apply transition-all duration-400 cursor-pointer;
     @apply hover:bg-gradient-to-br hover:from-white/20 hover:via-white/15 hover:to-white/8;
-    @apply hover:border-white/25 hover:-translate-y-2 hover:scale-[1.02];
-    @apply hover:shadow-glass-hover;
+    @apply hover:border-white/25 hover:-translate-y-3 hover:scale-[1.02];
+    @apply hover:shadow-premium-hover;
     position: relative;
     overflow: hidden;
   }
 
   .detail-card-improved::before {
     content: '';
-    @apply absolute inset-0 rounded-2xl pointer-events-none;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
+    @apply absolute inset-0 rounded-3xl pointer-events-none;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.15) 0%, 
+      transparent 50%, 
+      rgba(255, 255, 255, 0.08) 100%
+    );
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
   }
 
   .detail-card-improved:hover::before {
     opacity: 1;
   }
 
-  .detail-card {
-    @apply flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 backdrop-blur-md;
-    @apply bg-gradient-to-br from-white/12 via-white/8 to-white/4;
-    @apply border border-white/15 shadow-glass;
-    @apply hover:bg-gradient-to-br hover:from-white/20 hover:via-white/15 hover:to-white/8;
-    @apply hover:border-white/25 hover:-translate-y-2 hover:scale-[1.02];
-    @apply hover:shadow-glass-hover;
+  .detail-icon {
+    @apply w-8 h-8 text-accent-blue-400 flex-shrink-0 drop-shadow-sm;
+    filter: drop-shadow(0 0 12px rgba(79, 195, 247, 0.4));
+    transition: filter 0.3s ease;
   }
 
-  .detail-icon {
-    @apply w-7 h-7 text-accent-blue flex-shrink-0 drop-shadow-sm;
-    filter: drop-shadow(0 0 8px rgba(79, 195, 247, 0.3));
+  .detail-card-improved:hover .detail-icon {
+    filter: drop-shadow(0 0 16px rgba(79, 195, 247, 0.6));
   }
 
   .detail-content {
-    @apply flex flex-col gap-1.5;
+    @apply flex flex-col gap-2;
   }
 
   .detail-label {
-    @apply text-xs text-text-muted font-medium uppercase tracking-wider;
+    @apply caption;
   }
 
   .detail-value {
-    @apply text-lg md:text-xl text-text-primary font-bold;
+    @apply text-xl md:text-2xl text-text-primary font-bold;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
-  /* ----------------------------------------------------------------------------
-    Minimized Refresh Status for Better Visual Hierarchy
-  ---------------------------------------------------------------------------- */
-  .refresh-status-minimal {
-    @apply flex items-center justify-center w-8 h-8 rounded-full bg-accent-blue/10 border border-accent-blue/20;
-    animation: fadeIn 0.6s ease-out 1.2s both;
+  /* ============================================================================
+    ENHANCED SEARCH SYSTEM
+  ============================================================================ */
+  .search-container {
+    @apply relative z-20 w-full max-w-3xl mx-auto;
+    animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .status-indicator-minimal {
-    @apply w-3 h-3 bg-green-400 rounded-full shadow-green-400/60;
-    animation: pulse 2s ease-in-out infinite;
-    box-shadow: 0 0 6px rgba(129, 199, 132, 0.6);
+  .search-input-container {
+    @apply relative flex items-center backdrop-blur-2xl border rounded-5xl p-2 transition-all duration-400;
+    @apply bg-white/10 border-white/20 shadow-glass;
+    min-height: 4rem;
   }
 
-  .spinner-minimal {
-    @apply w-4 h-4 border-2 border-accent-blue/30 border-t-accent-blue rounded-full;
-    animation: spin 1s linear infinite;
+  .search-input-container:focus-within {
+    @apply border-white/35 bg-white/15 shadow-premium scale-[1.01] -translate-y-1;
   }
 
-  /* Original refresh status for backward compatibility */
-  .refresh-status {
-    @apply flex flex-col items-center rounded-3xl py-4 px-6 my-6 text-sm backdrop-blur-sm bg-accent-blue/10 border border-accent-blue/20 text-accent-blue;
-    animation: fadeIn 0.6s ease-out 1.2s both;
-    min-width: 230px;
+  .search-input-enhanced {
+    @apply flex-1 bg-transparent border-none outline-none text-white text-lg font-body;
+    @apply placeholder:text-white/60 placeholder:font-light;
+    @apply px-4 py-3 tracking-wide;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
-  .refresh-indicator {
-    @apply flex items-center justify-center gap-3 font-medium;
-  }
-  .auto-refresh-icon {
-    @apply w-[18px] h-[18px] text-accent-blue;
-    animation: spin 8s linear infinite;
-  }
-  .status-indicator {
-    @apply w-2 h-2 bg-green-400 rounded-full shadow-green-400/60;
-    animation: pulse 2s ease-in-out infinite;
-    box-shadow: 0 0 6px rgba(129, 199, 132, 0.6);
-  }
-  .spinner {
-    @apply w-5 h-5 border-2 border-accent-blue/30 border-t-accent-blue rounded-full;
-    animation: spin 1s linear infinite;
-  }
-  .last-updated {
-    @apply text-xs text-text-muted mt-2 opacity-80 whitespace-nowrap;
+  .search-button {
+    @apply w-14 h-14 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500;
+    @apply flex items-center justify-center shadow-premium transition-all duration-300;
+    @apply hover:scale-105 hover:shadow-glow-primary active:scale-95;
   }
 
-  /* Welcome Message – Hero section for onboarding experience */
-  .welcome-message {
-    @apply flex justify-center items-center min-h-[400px] w-full;
-    animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  .welcome-content {
-    @apply text-center glass-card p-12 max-w-[480px] shadow-luxury;
-    font-family: 'Manrope', 'Inter', sans-serif;
-  }
-  .welcome-icon {
-    @apply w-20 h-20 mx-auto mb-8 p-6 rounded-full flex items-center justify-center bg-gradient-to-r from-accent-blue to-accent-purple shadow-lg;
-    animation: float 3s ease-in-out infinite;
-  }
-  .welcome-icon svg { @apply w-10 h-10 text-white; }
-  .welcome-content h2 {
-    @apply text-2xl font-heading m-0 mb-4 bg-gradient-to-r from-white to-blue-50 bg-clip-text text-transparent;
-  }
-  .welcome-content p { @apply text-lg text-text-secondary m-0 mb-8 leading-relaxed; }
-  .welcome-features { @apply flex flex-col gap-4; }
-  .feature-item {
-    @apply flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 bg-white/5 border border-white/8 
-           hover:bg-white/10 hover:border-white/15 hover:translate-x-1 hover:shadow-luxury-hover;
-    font-size: 1rem;
-  }
-  .feature-icon { @apply text-2xl flex-shrink-0; }
-  .feature-item span:last-child { @apply text-text-primary font-medium; }
-
-  /* Enhanced Comfort Score Card with Premium Design */
+  /* ============================================================================
+    ENHANCED COMFORT SCORE DESIGN
+  ============================================================================ */
   .comfort-score-card {
-    @apply glass-card glass-card-hover min-w-[320px] max-w-[400px] w-full relative overflow-hidden;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+    @apply glass-card-premium glass-card-hover glass-card-interactive;
+    @apply min-w-[340px] max-w-[420px] w-full relative;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.15) 0%, 
+      rgba(255, 255, 255, 0.08) 50%, 
+      rgba(255, 255, 255, 0.05) 100%
+    );
   }
 
   .comfort-score-card::before {
     content: '';
-    @apply absolute inset-0 rounded-3xl pointer-events-none;
-    background: radial-gradient(circle at 30% 30%, rgba(79, 195, 247, 0.1) 0%, transparent 70%);
+    @apply absolute inset-0 rounded-4xl pointer-events-none;
+    background: radial-gradient(circle at 30% 30%, 
+      rgba(102, 126, 234, 0.12) 0%, 
+      transparent 70%
+    );
   }
 
   .comfort-score-ring {
     @apply relative drop-shadow-lg;
-    filter: drop-shadow(0 4px 20px rgba(79, 195, 247, 0.2));
-  }
-
-  .comfort-score-content {
-    @apply text-center relative z-10;
+    filter: drop-shadow(0 4px 24px rgba(102, 126, 234, 0.25));
   }
 
   .comfort-score-title {
-    @apply text-xl md:text-2xl font-bold text-text-primary m-0 mb-3;
-    @apply bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent;
-    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    @apply heading-secondary m-0 mb-4;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 1) 0%, 
+      rgba(240, 244, 255, 0.9) 50%, 
+      rgba(199, 214, 254, 0.8) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15);
   }
 
-  .comfort-score-description {
-    @apply text-base font-medium text-text-secondary m-0 leading-relaxed;
+  /* ============================================================================
+    ENHANCED FORECAST PANEL
+  ============================================================================ */
+  .forecast-panel {
+    @apply glass-card-premium glass-card-hover w-full;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.12) 0%, 
+      rgba(255, 255, 255, 0.08) 50%, 
+      rgba(255, 255, 255, 0.06) 100%
+    );
   }
 
-  /* Enhanced tooltip for comfort score */
-  .comfort-tooltip {
-    @apply fixed md:absolute z-[9999] left-1/2 top-1/2 md:top-auto transform -translate-x-1/2 -translate-y-1/2 md:-translate-y-full
-           w-[95vw] md:w-[420px] max-w-md bg-white/98 backdrop-blur-xl border border-white/30 rounded-3xl shadow-luxury overflow-hidden animate-slide-up;
-    font-size: 1rem;
-    font-family: 'Inter', 'Manrope', sans-serif;
-    max-height: 80vh;
-    overflow-y: auto;
+  .forecast-tabs {
+    @apply flex bg-white/8 rounded-3xl p-2 gap-2;
+    backdrop-filter: blur(16px);
   }
 
-  .comfort-tooltip-arrow {
-    @apply absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 hidden md:block;
-    border: 14px solid transparent;
-    border-top: 14px solid rgba(255, 255, 255, 0.98);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  .forecast-tab {
+    @apply flex items-center gap-3 py-4 px-6 border-none rounded-2xl font-medium text-sm;
+    @apply transition-all duration-300 font-body min-h-[3rem] cursor-pointer;
   }
 
-  .comfort-tooltip-close {
-    @apply w-10 h-10 md:w-8 md:h-8 border-none rounded-full bg-primary/15 text-primary cursor-pointer flex items-center justify-center 
-           transition-all duration-300 hover:bg-primary/25 hover:scale-110 active:scale-95;
+  .forecast-tab-active {
+    @apply bg-white/20 text-text-primary shadow-glass border border-white/20;
+    backdrop-filter: blur(24px);
   }
-}
 
-  /* Enhanced Loading States */
+  .forecast-tab-inactive {
+    @apply bg-transparent text-text-tertiary hover:bg-white/10 hover:text-text-secondary;
+  }
+
+  .forecast-item {
+    @apply p-5 lg:p-6 bg-gradient-to-br from-white/8 via-white/5 to-white/2;
+    @apply border border-white/10 rounded-3xl transition-all duration-400;
+    @apply cursor-pointer hover:bg-gradient-to-br hover:from-white/15 hover:via-white/10 hover:to-white/5;
+    @apply hover:border-white/20 hover:-translate-y-2 hover:scale-[1.01] hover:shadow-glass;
+    min-height: 140px;
+    backdrop-filter: blur(12px);
+  }
+
+  /* ============================================================================
+    REFRESH STATUS ENHANCEMENTS
+  ============================================================================ */
+  .refresh-status-minimal {
+    @apply flex items-center justify-center w-10 h-10 rounded-full;
+    @apply bg-accent-blue-500/10 border border-accent-blue-500/20;
+    animation: fadeIn 0.6s ease-out 1.2s both;
+  }
+
+  .status-indicator-minimal {
+    @apply w-3 h-3 bg-success-500 rounded-full;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .spinner-minimal {
+    @apply w-5 h-5 border-2 border-accent-blue-500/30 border-t-accent-blue-500 rounded-full;
+    animation: spin 1s linear infinite;
+  }
+
+  /* ============================================================================
+    WELCOME SCREEN ENHANCEMENTS
+  ============================================================================ */
+  .welcome-message {
+    @apply flex justify-center items-center min-h-[500px] w-full;
+    animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .welcome-content {
+    @apply text-center glass-card-premium p-12 lg:p-16 max-w-[600px] shadow-luxury;
+  }
+
+  .welcome-icon {
+    @apply w-24 h-24 mx-auto mb-10 p-8 rounded-full flex items-center justify-center;
+    @apply bg-gradient-to-r from-accent-blue-500 to-accent-purple-500 shadow-premium;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .welcome-icon svg { 
+    @apply w-12 h-12 text-white; 
+  }
+
+  .welcome-content h2 {
+    @apply heading-primary m-0 mb-6;
+  }
+
+  .welcome-content p { 
+    @apply body-large m-0 mb-10; 
+  }
+
+  .welcome-features { 
+    @apply flex flex-col gap-5; 
+  }
+
+  .feature-item {
+    @apply flex items-center gap-5 p-5 lg:p-6 rounded-3xl transition-all duration-400;
+    @apply bg-white/5 border border-white/8;
+    @apply hover:bg-white/10 hover:border-white/15 hover:translate-x-2 hover:shadow-glass;
+  }
+
+  .feature-icon { 
+    @apply text-3xl flex-shrink-0; 
+  }
+
+  .feature-item span:last-child { 
+    @apply body-base text-text-secondary font-medium; 
+  }
+
+  /* ============================================================================
+    ENHANCED LOADING STATES
+  ============================================================================ */
   .loading-skeleton {
-    @apply bg-gradient-to-r from-white/10 via-white/20 to-white/10 rounded-2xl animate-pulse;
+    @apply bg-gradient-to-r from-white/8 via-white/16 to-white/8 rounded-3xl;
     background-size: 200% 100%;
-    animation: skeletonShimmer 2s ease-in-out infinite;
+    animation: shimmer 2s ease-in-out infinite;
   }
 
   .loading-spinner-enhanced {
-    @apply w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin;
-    animation: spinEnhanced 1s linear infinite;
+    @apply w-6 h-6 border-2 border-white/25 border-t-white rounded-full;
+    animation: spin 1s linear infinite;
   }
 
   .loading-dots {
-    @apply flex gap-1;
+    @apply flex gap-2;
   }
 
   .loading-dot {
-    @apply w-2 h-2 bg-white/60 rounded-full;
+    @apply w-3 h-3 bg-white/60 rounded-full;
     animation: loadingDots 1.4s ease-in-out infinite both;
   }
 
   .loading-dot:nth-child(1) { animation-delay: -0.32s; }
   .loading-dot:nth-child(2) { animation-delay: -0.16s; }
   .loading-dot:nth-child(3) { animation-delay: 0s; }
+}
 
 @layer utilities {
-  /* Enhanced Custom Keyframe Animations */
+  /* Enhanced keyframe animations */
   @keyframes sparkle {
     from { transform: translateY(0px); }
-    to { transform: translateY(-200px); }
+    to { transform: translateY(-240px); }
   }
   
   @keyframes temperaturePulse {
@@ -526,39 +550,19 @@
       filter: brightness(1);
     }
     50% { 
-      transform: scale(1.02);
-      filter: brightness(1.1);
+      transform: scale(1.015);
+      filter: brightness(1.05);
     }
   }
   
   @keyframes slideRight {
     from {
       opacity: 0;
-      transform: translateX(20px);
+      transform: translateX(24px);
     }
     to {
       opacity: 1;
       transform: translateX(0);
-    }
-  }
-
-  @keyframes skeletonShimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
-  }
-
-  @keyframes spinEnhanced {
-    0% { 
-      transform: rotate(0deg);
-      filter: hue-rotate(0deg);
-    }
-    100% { 
-      transform: rotate(360deg);
-      filter: hue-rotate(360deg);
     }
   }
 
@@ -573,264 +577,173 @@
     }
   }
 
-  @keyframes cardHover {
-    0% {
-      transform: translateY(0) scale(1);
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-    }
-    100% {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 20px 60px rgba(31, 38, 135, 0.25);
-    }
+  /* Utility classes for enhanced spacing */
+  .space-y-enhanced > * + * {
+    margin-top: 1.5rem;
   }
 
-  @keyframes iconGlow {
-    0%, 100% {
-      filter: drop-shadow(0 0 8px rgba(79, 195, 247, 0.3));
-    }
-    50% {
-      filter: drop-shadow(0 0 16px rgba(79, 195, 247, 0.5));
+  @media (min-width: 768px) {
+    .space-y-enhanced > * + * {
+      margin-top: 2rem;
     }
   }
 }
 
-/* Responsive Design - Improved mobile-first approach */
-@media (max-width: 1024px) {
+/* ============================================================================
+  RESPONSIVE DESIGN ENHANCEMENTS
+============================================================================ */
+
+/* Large screens */
+@media (min-width: 1280px) {
+  .main-container {
+    @apply px-12 py-12;
+  }
+  
   .dashboard-main {
-    @apply flex-col gap-6;
+    @apply gap-16;
   }
   
   .secondary-content-section {
-    @apply lg:w-full;
-  }
-  
-  .temperature-icon-section {
-    @apply gap-6;
+    @apply w-[28rem] min-w-[28rem];
   }
 }
 
-  /* Enhanced Forecast Panel Design */
-  .forecast-panel {
-    @apply glass-card glass-card-hover w-full overflow-hidden;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .dashboard-main {
+    @apply flex-col gap-8;
   }
-
-  .forecast-tabs {
-    @apply flex bg-white/8 rounded-2xl p-1.5 gap-1;
-    backdrop-filter: blur(10px);
+  
+  .secondary-content-section {
+    @apply w-full max-w-3xl mx-auto;
   }
-
-  .forecast-tab {
-    @apply flex items-center gap-2 py-3 px-5 border-none rounded-xl font-medium text-sm cursor-pointer 
-           transition-all duration-300 font-manrope min-h-[44px];
+  
+  .temperature-icon-section {
+    @apply gap-8;
   }
+}
 
-  .forecast-tab-active {
-    @apply bg-white/20 text-text-primary shadow-glass border border-white/20;
-    backdrop-filter: blur(20px);
-  }
-
-  .forecast-tab-inactive {
-    @apply bg-transparent text-text-secondary hover:bg-white/10 hover:text-text-primary;
-  }
-
-  .forecast-item {
-    @apply p-4 md:p-6 bg-gradient-to-br from-white/8 via-white/5 to-white/2 border border-white/10 rounded-2xl 
-           transition-all duration-300 cursor-pointer hover:bg-gradient-to-br hover:from-white/15 hover:via-white/10 hover:to-white/5
-           hover:border-white/20 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-glass;
-    min-height: 120px;
-    backdrop-filter: blur(10px);
-  }
-
-  .forecast-item-weekly {
-    @apply grid grid-cols-1 md:grid-cols-4 items-center gap-4 md:gap-6 p-4 md:p-6;
-    @apply bg-gradient-to-r from-white/8 via-white/5 to-white/8 border border-white/10 rounded-2xl;
-    @apply transition-all duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-white/15 hover:via-white/10 hover:to-white/15;
-    @apply hover:border-white/20 hover:translate-x-1 hover:shadow-glass;
-    backdrop-filter: blur(10px);
-  }
-
+/* Mobile enhancements */
 @media (max-width: 768px) {
-  .main-container    { @apply p-4 min-h-screen; }
-  .dashboard-header  { @apply mb-6; }
-  .weather-card      { @apply p-6 rounded-2xl; }
-  .city-temp-improved { @apply text-4xl; }
-  .city-name         { @apply text-2xl flex-col gap-2; }
-  .city-status-header { @apply flex-col gap-3 items-start; }
-  .temperature-icon-section { @apply flex-col gap-4; }
-  .weather-description-improved { @apply text-lg; }
-  .weather-details-improved { @apply grid-cols-1 gap-3 mt-6; }
-  .detail-card-improved { @apply p-4; }
-  .welcome-content   { @apply p-6 mx-2; }
-  .welcome-content h2 { @apply text-lg; }
-  .welcome-content p { @apply text-base; }
-  .welcome-icon      { @apply w-14 h-14 p-4 mb-4; }
-  .welcome-icon svg  { @apply w-7 h-7; }
-  .feature-item      { @apply p-3; }
-  .feature-icon      { @apply text-xl; }
+  .main-container { 
+    @apply p-4 min-h-screen; 
+  }
   
-  /* Mobile-specific enhancements */
-  .comfort-score-card { @apply min-w-[280px]; }
-  .forecast-panel { @apply p-6; }
-  .forecast-item { @apply p-4 min-h-[100px]; }
-  .forecast-item-weekly { @apply grid-cols-1 gap-3 p-4; }
-  .forecast-tabs { @apply flex-col md:flex-row gap-2; }
-  .forecast-tab { @apply min-h-[48px] justify-center; }
+  .dashboard-header { 
+    @apply mb-8; 
+  }
+  
+  .weather-card { 
+    @apply p-6 rounded-3xl; 
+  }
+  
+  .city-temp-improved { 
+    @apply text-5xl; 
+  }
+  
+  .city-name { 
+    @apply text-2xl flex-col gap-3; 
+  }
+  
+  .city-status-header { 
+    @apply flex-col gap-4 items-start; 
+  }
+  
+  .temperature-icon-section { 
+    @apply flex-col gap-6; 
+  }
+  
+  .weather-description-improved { 
+    @apply text-xl; 
+  }
+  
+  .weather-details-improved { 
+    @apply grid-cols-1 gap-4 mt-8; 
+  }
+  
+  .detail-card-improved { 
+    @apply p-5; 
+  }
+  
+  .welcome-content { 
+    @apply p-8 mx-3; 
+  }
+  
+  .comfort-score-card { 
+    @apply min-w-[300px]; 
+  }
+  
+  .forecast-panel { 
+    @apply p-6; 
+  }
+  
+  .forecast-tabs { 
+    @apply flex-col gap-2; 
+  }
 }
 
-@media (max-width: 640px) {
-  .city-name {
-    @apply text-xl items-center;
-  }
-  
-  .country-badge {
-    @apply text-xs py-1 px-2;
-  }
-  
-  .city-temp-improved {
-    @apply text-4xl;
-  }
-  
-  .weather-description-improved {
-    @apply text-lg;
-  }
-  
-  .temperature-icon-section {
-    @apply gap-3;
-  }
-}
-
+/* Small mobile devices */
 @media (max-width: 480px) {
   .main-container {
     @apply p-3;
   }
   
-  .dashboard-header {
-    @apply mb-4;
-  }
-  
   .weather-card {
-    @apply p-4 rounded-xl;
+    @apply p-4 rounded-2xl;
   }
   
   .city-temp-improved {
     @apply text-4xl;
   }
   
-  .weather-details-improved {
-    @apply mt-4;
+  .search-input-container {
+    min-height: 3.5rem;
+  }
+  
+  .search-button {
+    @apply w-12 h-12;
   }
   
   .detail-card-improved {
-    @apply p-3 gap-3;
-  }
-  
-  .detail-icon {
-    @apply w-5 h-5;
-  }
-  
-  .detail-label {
-    @apply text-xs;
-  }
-  
-  .detail-value {
-    @apply text-sm;
+    @apply p-4 gap-3;
   }
   
   .welcome-content {
-    @apply p-4 mx-2;
+    @apply p-6 mx-2;
   }
   
-  .welcome-content h2 {
-    @apply text-lg;
-  }
-  
-  .welcome-content p {
-    @apply text-sm;
-  }
-  
-  .welcome-icon {
-    @apply w-12 h-12 p-3 mb-4;
-  }
-  
-  .welcome-icon svg {
-    @apply w-6 h-6;
-  }
-  
-  .feature-item {
-    @apply p-3;
-  }
-  
-  .feature-icon {
-    @apply text-lg;
-  }
-
-  /* Enhanced SearchBar mobile improvements */
-  .search-container {
-    @apply mx-2;
-  }
-  
-  .search-input-enhanced {
-    @apply text-base py-3;
-  }
-  
-  .suggestion-item {
-    @apply py-4 px-3 text-base min-h-[3.5rem];
-  }
-  
-  /* Ensure suggestions don't cover entire viewport */
-  #search-suggestions {
-    @apply max-h-[50vh] rounded-xl;
-  }
-  
-  /* Improve touch targets on very small screens */
-  .touch-target {
-    @apply min-w-[2.75rem] min-h-[2.75rem];
+  .comfort-score-card {
+    @apply min-w-[280px];
   }
 }
 
-/* Accessibility and reduced motion */
+/* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .main-container { @apply bg-gradient-primary; }
 }
 
-/* High contrast and forced colors mode (better legibility) */
+/* High contrast mode */
 @media (prefers-contrast: high) {
-  .weather-card, .glass-card {
-    @apply border-white/80 bg-black/80 !important;
-    border-width: 3px !important;
-    color: #fff !important;
-  }
-  .search-input, input, button {
-    @apply border-white/80 bg-black/80 text-white !important;
+  .glass-card, .weather-card {
+    @apply border-white/90 bg-black/90 !important;
     border-width: 2px !important;
   }
-  .city-temp, .city-name, .city-header, .detail-label, .detail-value {
-    color: #fff !important;
+  
+  .search-input-enhanced, .detail-value, .city-name {
+    color: #ffffff !important;
   }
 }
 
-/* Dark mode support for root color tokens */
+/* Dark mode enhancements */
 @media (prefers-color-scheme: dark) {
   :root {
-    --glass-bg: rgba(0, 0, 0, 0.22);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(0, 0, 0, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.08);
     --text-primary: rgba(255, 255, 255, 0.98);
-    --text-secondary: rgba(255, 255, 255, 0.8);
-    --text-muted: rgba(255, 255, 255, 0.6);
-    --glass-card-bg: rgba(40, 53, 78, 0.85);
-  }
-  .glass-card, .weather-card, .search-container, .luxury-tooltip {
-    background: var(--glass-card-bg) !important;
-    color: var(--text-primary) !important;
-  }
-  input, .search-input {
-    background: rgba(30, 40, 60, 0.6) !important;
-    color: var(--text-primary) !important;
+    --text-secondary: rgba(255, 255, 255, 0.85);
   }
 }

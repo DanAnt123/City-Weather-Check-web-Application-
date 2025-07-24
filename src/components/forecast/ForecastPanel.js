@@ -60,8 +60,8 @@ const ForecastPanel = ({ currentWeather, isVisible }) => {
 
     return (
         <div className="forecast-panel animate-slide-up">
-            <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-                <h2 className="text-2xl md:text-3xl font-bold text-text-primary m-0 bg-gradient-to-r from-white via-blue-50 to-blue-100 bg-clip-text text-transparent">
+            <div className="flex items-center justify-between mb-10 flex-wrap gap-6">
+                <h2 className="heading-secondary m-0">
                     Weather Forecast
                 </h2>
                 <div className="forecast-tabs">
