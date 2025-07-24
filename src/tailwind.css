@@ -126,11 +126,76 @@
   }
 
   /* ----------------------------------------------------------------------------
-    Responsive, Spacing, and Font Consistency for Input/Search/Toolbar
+    Enhanced Search Container with Mobile-First Design
   ---------------------------------------------------------------------------- */
   .search-container {
     @apply relative z-10 w-full max-w-2xl mx-auto;
     animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  /* Enhanced spinner with better visibility */
+  .search-spinner {
+    @apply animate-spin;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 50%;
+  }
+=======
+  /* ----------------------------------------------------------------------------
+    Enhanced Search Container with Mobile-First Design and Accessibility
+  ---------------------------------------------------------------------------- */
+  .search-container {
+    @apply relative z-10 w-full max-w-2xl mx-auto;
+    animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Screen reader only content for accessibility */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  /* Enhanced search input styling with better contrast */
+  .search-input-enhanced {
+    @apply bg-transparent border-none outline-none text-white text-lg font-normal font-manrope tracking-wide;
+    @apply placeholder:text-white/60 placeholder:font-light focus:placeholder:text-white/40;
+    @apply selection:bg-white/20;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Enhanced suggestion item styling */
+  .suggestion-item {
+    @apply flex items-center gap-3 py-4 px-4 rounded-xl text-sm font-medium cursor-pointer;
+    @apply transition-all duration-200 font-manrope min-h-[3rem] text-left w-full border-none;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-white/50;
+  }
+
+  .suggestion-item:hover {
+    @apply transform translate-x-1;
+  }
+
+  .suggestion-item:active {
+    @apply transform scale-[0.98];
+  }
+
+  /* Enhanced touch targets for mobile */
+  .touch-target {
+    @apply min-w-[3rem] min-h-[3rem];
+    touch-action: manipulation;
+  }
+
+  /* Enhanced spinner with better visibility */
+  .search-spinner {
+    @apply animate-spin;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 50%;
   }
 
   /* Tooltips – used in ComfortScore as well as icons/cards */
@@ -483,6 +548,29 @@
   
   .feature-icon {
     @apply text-lg;
+  }
+
+  /* Enhanced SearchBar mobile improvements */
+  .search-container {
+    @apply mx-2;
+  }
+  
+  .search-input-enhanced {
+    @apply text-base py-3;
+  }
+  
+  .suggestion-item {
+    @apply py-4 px-3 text-base min-h-[3.5rem];
+  }
+  
+  /* Ensure suggestions don't cover entire viewport */
+  #search-suggestions {
+    @apply max-h-[50vh] rounded-xl;
+  }
+  
+  /* Improve touch targets on very small screens */
+  .touch-target {
+    @apply min-w-[2.75rem] min-h-[2.75rem];
   }
 }
 
