@@ -651,17 +651,80 @@
   .loading-dot:nth-child(3) { animation-delay: 0s; }
 
   /* ============================================================================
-    TOOLTIP ENHANCEMENTS with better accessibility
+    ENHANCED TOOLTIP SYSTEM with improved accessibility and mobile support
   ============================================================================ */
   .tooltip-overlay {
-    @apply fixed inset-0 bg-black/20 backdrop-blur-sm z-[999];
+    @apply fixed inset-0 bg-black/30 backdrop-blur-sm z-[999];
     animation: fadeIn 0.2s ease-out;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .tooltip-close-enhanced {
-    @apply w-10 h-10 border-none rounded-full bg-gray-100/90 text-gray-700 cursor-pointer;
+    @apply border-none rounded-full bg-gray-100/95 text-gray-700 cursor-pointer;
     @apply transition-all duration-200 flex items-center justify-center;
-    @apply hover:bg-gray-200/90 hover:scale-110 active:scale-95;
+    @apply hover:bg-gray-200/95 hover:scale-105 active:scale-95;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-1;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Enhanced tooltip positioning for better mobile experience */
+  @media (max-width: 768px) {
+    .tooltip-overlay {
+      @apply bg-black/40;
+    }
+    
+    /* Ensure tooltips don't go off-screen on mobile */
+    [role="tooltip"] {
+      max-height: calc(100vh - 2rem) !important;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  /* Improved tooltip animations */
+  @keyframes slideUpMobile {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .animate-slide-up-mobile {
+    animation: slideUpMobile 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Enhanced focus styles for tooltip triggers */
+  [role="button"][aria-expanded] {
+    @apply focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent;
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  [role="button"][aria-expanded="true"] {
+    @apply ring-2 ring-accent-blue-500/40;
+  }
+
+  /* Better touch targets for mobile */
+  @media (max-width: 768px) {
+    .tooltip-close-enhanced {
+      @apply min-w-[44px] min-h-[44px];
+    }
+    
+    /* Ensure all interactive elements meet touch target size */
+    button, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Exception for inline buttons that already have proper sizing */
+    .inline-button {
+      min-height: auto;
+      min-width: auto;
+    }
   }
 }
 
