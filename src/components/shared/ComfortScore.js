@@ -77,8 +77,8 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
     if (!isVisible || !score) return null;
 
     return (
-        <div className="flex justify-center my-8 animate-fade-in" style={{ animationDelay: '1.4s', animationFillMode: 'both' }}>
-            {showTooltip && <div className="tooltip-overlay" onClick={() => setShowTooltip(false)} onTouchStart={() => setShowTooltip(false)}></div>}
+        <div className="flex justify-center my-8 animate-fade-in [animation-delay:1.4s] [animation-fill-mode:both]">
+            {showTooltip && <div className="fixed inset-0 z-[999] bg-black/20 backdrop-blur-sm" onClick={() => setShowTooltip(false)} onTouchStart={() => setShowTooltip(false)}></div>}
             <div 
                 className="comfort-score-card cursor-pointer transition-all duration-400 outline-none focus:outline-2 focus:outline-accent-blue-500 focus:outline-offset-4 focus:ring-2 focus:ring-accent-blue-500/30"
                 onMouseEnter={() => !('ontouchstart' in window) && setShowTooltip(true)}
@@ -106,37 +106,35 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                             cx="50"
                             cy="50"
                             r="45"
-                            fill="none"
-                            stroke="rgba(255, 255, 255, 0.1)"
-                            strokeWidth="6"
+                            className="fill-none stroke-white/10 stroke-[6]"
                         />
                         {/* Progress ring */}
                         <circle
                             cx="50"
                             cy="50"
                             r="45"
-                            fill="none"
-                            stroke={getScoreColor(score)}
-                            strokeWidth="6"
-                            strokeLinecap="round"
-                            strokeDasharray={circumference}
-                            strokeDashoffset={strokeDashoffset}
-                            className={`transition-all duration-[1500ms] cubic-bezier-[0.4,0,0.2,1] ${isAnimating ? 'animate-pulse-soft' : ''}`}
-                            transform="rotate(-90 50 50)"
+                            className={`fill-none stroke-[6] stroke-round transition-all duration-[1500ms] ease-smooth ${isAnimating ? 'animate-pulse-soft' : ''}`}
+                            style={{ 
+                                stroke: getScoreColor(score),
+                                strokeDasharray: circumference,
+                                strokeDashoffset: strokeDashoffset,
+                                transform: 'rotate(-90deg)',
+                                transformOrigin: '50% 50%'
+                            }}
                         />
                         {/* Glow effect */}
                         <circle
                             cx="50"
                             cy="50"
                             r="45"
-                            fill="none"
-                            stroke={getScoreColor(score)}
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeDasharray={circumference}
-                            strokeDashoffset={strokeDashoffset}
-                            className="transition-all duration-[1500ms] cubic-bezier-[0.4,0,0.2,1] opacity-50 blur-sm animate-pulse"
-                            transform="rotate(-90 50 50)"
+                            className="fill-none stroke-[2] stroke-round transition-all duration-[1500ms] ease-smooth opacity-50 blur-sm animate-pulse"
+                            style={{ 
+                                stroke: getScoreColor(score),
+                                strokeDasharray: circumference,
+                                strokeDashoffset: strokeDashoffset,
+                                transform: 'rotate(-90deg)',
+                                transformOrigin: '50% 50%'
+                            }}
                         />
                     </svg>
                     
@@ -199,8 +197,7 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                         </div>
                         
                         {/* Tooltip arrow - hidden on mobile, visible on desktop */}
-                        <div className="hidden md:block absolute top-full left-1/2 transform -translate-x-1/2 border-[14px] border-transparent border-t-white/98" 
-                             style={{ filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1))' }}></div>
+                        <div className="hidden md:block absolute top-full left-1/2 transform -translate-x-1/2 border-[14px] border-transparent border-t-white/98 drop-shadow-lg"></div>
                         
                         <div className="p-4 md:p-4 pt-2 md:pt-4 pb-6 text-gray-700">
                             {/* Enhanced explanation with better mobile formatting */}
@@ -261,11 +258,15 @@ Each factor contributes up to 2 points, creating a total score from 1-10 where 1
                                                         {[1, 2].map(dot => (
                                                             <div 
                                                                 key={dot}
-                                                                className={`w-3 h-3 md:w-2 md:h-2 rounded-full transition-all duration-300 ${dot <= factorScore ? 'shadow-sm' : ''}`}
-                                                                style={{
-                                                                    backgroundColor: dot <= factorScore ? getScoreColor(factorScore * 5) : 'rgba(156, 163, 175, 0.3)',
-                                                                    boxShadow: dot <= factorScore ? `0 0 8px ${getScoreColor(factorScore * 5)}50` : 'none'
-                                                                }}
+                                                                className={`w-3 h-3 md:w-2 md:h-2 rounded-full transition-all duration-300 ${
+                                                                    dot <= factorScore 
+                                                                        ? 'shadow-sm [box-shadow:var(--glow-shadow)]' 
+                                                                        : 'bg-gray-400/30'
+                                                                }`}
+                                                                style={dot <= factorScore ? {
+                                                                    backgroundColor: getScoreColor(factorScore * 5),
+                                                                    '--glow-shadow': `0 0 8px ${getScoreColor(factorScore * 5)}80`
+                                                                } : {}}
                                                                 aria-hidden="true"
                                                             ></div>
                                                         ))}
