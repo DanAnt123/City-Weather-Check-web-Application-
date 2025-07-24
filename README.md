@@ -14,7 +14,14 @@ cd City-Weather-Check-web-Application-
 # Remove previous node_modules and lock file if they exist
 rm -rf node_modules package-lock.json
 
-# Install dependencies
+# (Recommended troubleshooting for installation/network errors)
+# 1. Clear the npm cache if you experience errors:
+npm cache clean --force
+
+# 2. Ensure the default npm registry is configured (see .npmrc file):
+npm config set registry https://registry.npmjs.org/
+
+# 3. Now install dependencies:
 npm install
 
 # Start the development server
@@ -25,3 +32,4 @@ The app should now open in your browser at `http://localhost:3000`.
 
 - The project uses [axios](https://www.npmjs.com/package/axios) for HTTP requests.
 - If you encounter installation errors, ensure your npm version is up to date.
+- If errors persist (e.g. network/timeout), try deleting all node_modules & lockfiles, clearing the npm cache, and reinstalling. You may also inspect .npmrc network options or your firewall/proxy settings.
