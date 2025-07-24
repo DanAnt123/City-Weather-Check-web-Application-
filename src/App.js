@@ -154,69 +154,63 @@ const App = () => {
 
     return (
         <div className={`main-container ${getWeatherClass()}`}>
-            {/* Luxury Search Bar */}
-            <SearchBar onSearch={handleSearch} isLoading={isSearching || isRefreshing} />
+            {/* Header section with search */}
+            <header className="dashboard-header">
+                <SearchBar onSearch={handleSearch} isLoading={isSearching || isRefreshing} />
+            </header>
             
             {weather.main && (
-                <>
-                    {/* Main Weather Card */}
-                    <div className="weather-card">
-                        <div className="city-header">
-                            <h1 className="city-name">
-                                <span>{weather.name}</span>
-                                <span className="country-badge">{weather.sys.country}</span>
-                            </h1>
-                        </div>
-                        
-                        <div className="temperature-section">
-                            <div className="city-temp">
-                                {Math.round((weather.main.temp) - 273.15)}
-                                <span className="temp-unit">°C</span>
+                <main className="dashboard-main">
+                    {/* Primary weather info section */}
+                    <section className="primary-weather-section">
+                        <div className="weather-card">
+                            {/* City and status header */}
+                            <div className="city-status-header">
+                                <div className="city-header">
+                                    <h1 className="city-name">
+                                        <span>{weather.name}</span>
+                                        <span className="country-badge">{weather.sys.country}</span>
+                                    </h1>
+                                </div>
+                                
+                                {/* Minimized refresh status */}
+                                <div className="refresh-status-minimal">
+                                    {isRefreshing ? (
+                                        <div className="spinner-minimal"></div>
+                                    ) : (
+                                        <div className="status-indicator-minimal" 
+                                             title={`Last updated: ${lastUpdated ? lastUpdated.toLocaleTimeString() : 'Now'}`}>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                        
-                        {/* Enhanced refresh status */}
-                        <div className="refresh-status">
-                            <div className="refresh-indicator">
-                                {isRefreshing ? (
-                                    <>
-                                        <div className="spinner"></div>
-                                        <span>Updating weather data...</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <svg className="auto-refresh-icon" viewBox="0 0 24 24" fill="none">
-                                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" stroke="currentColor" strokeWidth="2"/>
-                                            <path d="M21 3v5h-5" stroke="currentColor" strokeWidth="2"/>
-                                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" stroke="currentColor" strokeWidth="2"/>
-                                            <path d="M8 16H3v5" stroke="currentColor" strokeWidth="2"/>
-                                        </svg>
-                                        <span>Auto-refresh: Active</span>
-                                        <div className="status-indicator"></div>
-                                    </>
-                                )}
-                            </div>
-                            <div className="last-updated">
-                                Last updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Now'}
-                            </div>
-                        </div>
-                        
-                        <div className="weather-info">
-                            {/* Luxury Weather Icon */}
-                            <WeatherIcon 
-                                weatherCode={weather.weather[0].main}
-                                description={weather.weather[0].description}
-                                size="large"
-                                animated={true}
-                            />
                             
-                            <p className="weather-description">
-                                {weather.weather[0].description}
-                            </p>
+                            {/* Main weather display with improved hierarchy */}
+                            <div className="weather-primary-display">
+                                <div className="temperature-icon-section">
+                                    <div className="city-temp-improved">
+                                        {Math.round((weather.main.temp) - 273.15)}
+                                        <span className="temp-unit">°C</span>
+                                    </div>
+                                    
+                                    <div className="weather-icon-section">
+                                        <WeatherIcon 
+                                            weatherCode={weather.weather[0].main}
+                                            description={weather.weather[0].description}
+                                            size="large"
+                                            animated={true}
+                                        />
+                                    </div>
+                                </div>
+                                
+                                <div className="weather-description-improved">
+                                    {weather.weather[0].description}
+                                </div>
+                            </div>
 
-                            {/* Additional Weather Details */}
-                            <div className="weather-details-grid">
-                                <div className="detail-card">
+                            {/* Weather details in improved grid */}
+                            <div className="weather-details-improved">
+                                <div className="detail-card-improved">
                                     <svg className="detail-icon" viewBox="0 0 24 24" fill="none">
                                         <path d="M14 4.5V9a3 3 0 0 0 3 3h4.5" stroke="currentColor" strokeWidth="2"/>
                                         <path d="M12 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.5L12 2z" stroke="currentColor" strokeWidth="2"/>
@@ -229,7 +223,7 @@ const App = () => {
                                     </div>
                                 </div>
 
-                                <div className="detail-card">
+                                <div className="detail-card-improved">
                                     <svg className="detail-icon" viewBox="0 0 24 24" fill="none">
                                         <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" stroke="currentColor" strokeWidth="2"/>
                                         <path d="M9.6 4.6A2 2 0 1 1 11 8H2" stroke="currentColor" strokeWidth="2"/>
@@ -242,7 +236,7 @@ const App = () => {
                                     </div>
                                 </div>
 
-                                <div className="detail-card">
+                                <div className="detail-card-improved">
                                     <svg className="detail-icon" viewBox="0 0 24 24" fill="none">
                                         <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5C2 10.79 3.51 12.54 5 14Z" stroke="currentColor" strokeWidth="2"/>
                                     </svg>
@@ -254,7 +248,7 @@ const App = () => {
                                     </div>
                                 </div>
 
-                                <div className="detail-card">
+                                <div className="detail-card-improved">
                                     <svg className="detail-icon" viewBox="0 0 24 24" fill="none">
                                         <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2"/>
                                         <path d="M12 2v2" stroke="currentColor" strokeWidth="2"/>
@@ -275,60 +269,69 @@ const App = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    {/* Luxury Comfort Score */}
-                    {canGoScore !== null && (
-                        <ComfortScore 
-                            score={canGoScore}
-                            factors={scoreFactors}
-                            isVisible={!!weather.main}
-                        />
-                    )}
+                    {/* Secondary content section with better layout */}
+                    <section className="secondary-content-section">
+                        {/* Comfort Score */}
+                        {canGoScore !== null && (
+                            <div className="comfort-score-container">
+                                <ComfortScore 
+                                    score={canGoScore}
+                                    factors={scoreFactors}
+                                    isVisible={!!weather.main}
+                                />
+                            </div>
+                        )}
 
-                    {/* Forecast Panel */}
-                    <ForecastPanel 
-                        currentWeather={weather}
-                        isVisible={showForecast}
-                    />
-                </>
+                        {/* Forecast Panel */}
+                        <div className="forecast-container">
+                            <ForecastPanel 
+                                currentWeather={weather}
+                                isVisible={showForecast}
+                            />
+                        </div>
+                    </section>
+                </main>
             )}
 
             {/* Welcome message when no weather selected */}
             {!weather.main && !isSearching && (
-                <div className="welcome-message">
-                    <div className="welcome-content">
-                        <div className="welcome-icon">
-                            <svg viewBox="0 0 24 24" fill="none">
-                                <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2"/>
-                                <path d="M12 2v2" stroke="currentColor" strokeWidth="2"/>
-                                <path d="M12 20v2" stroke="currentColor" strokeWidth="2"/>
-                                <path d="M4.93 4.93l1.41 1.41" stroke="currentColor" strokeWidth="2"/>
-                                <path d="M17.66 17.66l1.41 1.41" stroke="currentColor" strokeWidth="2"/>
-                                <path d="M2 12h2" stroke="currentColor" strokeWidth="2"/>
-                                <path d="M20 12h2" stroke="currentColor" strokeWidth="2"/>
-                                <path d="M6.34 17.66l-1.41 1.41" stroke="currentColor" strokeWidth="2"/>
-                                <path d="M19.07 4.93l-1.41 1.41" stroke="currentColor" strokeWidth="2"/>
-                            </svg>
-                        </div>
-                        <h2>Welcome to Luxury Weather</h2>
-                        <p>Discover premium weather insights with our flagship experience</p>
-                        <div className="welcome-features">
-                            <div className="feature-item">
-                                <span className="feature-icon">🌤️</span>
-                                <span>Real-time Weather Data</span>
+                <main className="welcome-main">
+                    <div className="welcome-message">
+                        <div className="welcome-content">
+                            <div className="welcome-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2"/>
+                                    <path d="M12 2v2" stroke="currentColor" strokeWidth="2"/>
+                                    <path d="M12 20v2" stroke="currentColor" strokeWidth="2"/>
+                                    <path d="M4.93 4.93l1.41 1.41" stroke="currentColor" strokeWidth="2"/>
+                                    <path d="M17.66 17.66l1.41 1.41" stroke="currentColor" strokeWidth="2"/>
+                                    <path d="M2 12h2" stroke="currentColor" strokeWidth="2"/>
+                                    <path d="M20 12h2" stroke="currentColor" strokeWidth="2"/>
+                                    <path d="M6.34 17.66l-1.41 1.41" stroke="currentColor" strokeWidth="2"/>
+                                    <path d="M19.07 4.93l-1.41 1.41" stroke="currentColor" strokeWidth="2"/>
+                                </svg>
                             </div>
-                            <div className="feature-item">
-                                <span className="feature-icon">📊</span>
-                                <span>Comfort Score Analysis</span>
-                            </div>
-                            <div className="feature-item">
-                                <span className="feature-icon">📱</span>
-                                <span>Mobile-First Design</span>
+                            <h2>Welcome to Luxury Weather</h2>
+                            <p>Discover premium weather insights with our flagship experience</p>
+                            <div className="welcome-features">
+                                <div className="feature-item">
+                                    <span className="feature-icon">🌤️</span>
+                                    <span>Real-time Weather Data</span>
+                                </div>
+                                <div className="feature-item">
+                                    <span className="feature-icon">📊</span>
+                                    <span>Comfort Score Analysis</span>
+                                </div>
+                                <div className="feature-item">
+                                    <span className="feature-icon">📱</span>
+                                    <span>Mobile-First Design</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </main>
             )}
         </div>
     );

@@ -80,10 +80,42 @@
   */
 
   /* ----------------------------------------------------------------------------
+    Dashboard Layout Structure - Semantic sections for better organization
+  ---------------------------------------------------------------------------- */
+  .dashboard-header {
+    @apply w-full max-w-5xl mb-8 z-10;
+    animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .dashboard-main {
+    @apply w-full max-w-5xl flex flex-col lg:flex-row gap-8 items-start justify-center;
+  }
+
+  .welcome-main {
+    @apply w-full max-w-5xl flex justify-center items-center min-h-[400px];
+  }
+
+  .primary-weather-section {
+    @apply flex-1 max-w-2xl w-full;
+  }
+
+  .secondary-content-section {
+    @apply flex flex-col gap-8 w-full lg:w-96 lg:min-w-[384px];
+  }
+
+  .comfort-score-container {
+    @apply w-full;
+  }
+
+  .forecast-container {
+    @apply w-full;
+  }
+
+  /* ----------------------------------------------------------------------------
     Card/Panel/Widget Consistency (Weather Card, Detail Grids)
   ---------------------------------------------------------------------------- */
   .weather-card {
-    @apply glass-card glass-card-hover max-w-[520px] w-full text-center relative z-[5] overflow-hidden;
+    @apply glass-card glass-card-hover w-full text-center relative z-[5] overflow-hidden;
     animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   .weather-card::before {
@@ -97,7 +129,7 @@
     Responsive, Spacing, and Font Consistency for Input/Search/Toolbar
   ---------------------------------------------------------------------------- */
   .search-container {
-    @apply relative mb-12 z-10 w-full max-w-xl;
+    @apply relative z-10 w-full max-w-2xl mx-auto;
     animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
@@ -122,65 +154,72 @@
   }
 
   /* Additional class improvements, corrections and spacing handled below ... (rest of file continues as before) */
-  /* City Header */
+  /* ----------------------------------------------------------------------------
+    Improved City Header with Status Integration
+  ---------------------------------------------------------------------------- */
+  .city-status-header {
+    @apply flex items-start justify-between mb-6 relative;
+  }
+
   .city-header {
-    @apply mb-8 relative;
+    @apply flex-1;
   }
 
   .city-name {
-    @apply text-4xl font-bold text-text-primary m-0 flex items-center justify-center gap-4;
+    @apply text-3xl md:text-4xl font-bold text-text-primary m-0 flex items-center justify-start gap-3;
     @apply tracking-tight drop-shadow-sm;
     animation: scaleIn 0.6s ease-out 0.2s both;
   }
 
   .country-badge {
-    @apply bg-gradient-to-r from-accent-blue to-accent-purple text-white py-2 px-4 rounded-3xl;
-    @apply text-sm font-semibold tracking-wide shadow-lg;
+    @apply bg-gradient-to-r from-accent-blue to-accent-purple text-white py-1.5 px-3 rounded-2xl;
+    @apply text-xs md:text-sm font-semibold tracking-wide shadow-lg;
     animation: slideRight 0.6s ease-out 0.4s both;
   }
 
-  /* Temperature Display */
-  .temperature-section {
-    @apply my-10 relative;
+  /* ----------------------------------------------------------------------------
+    Improved Temperature and Weather Display with Better Hierarchy
+  ---------------------------------------------------------------------------- */
+  .weather-primary-display {
+    @apply mb-8 relative;
   }
 
-  .city-temp {
-    @apply text-8xl font-extrabold m-0 leading-none relative;
+  .temperature-icon-section {
+    @apply flex items-center justify-center gap-8 mb-6;
+  }
+
+  .city-temp-improved {
+    @apply text-6xl md:text-7xl lg:text-8xl font-bold m-0 leading-none relative;
     @apply bg-gradient-to-r from-white via-blue-50 to-blue-100 bg-clip-text text-transparent;
     text-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
     animation: temperaturePulse 3s ease-in-out infinite, scaleIn 0.8s ease-out 0.6s both;
   }
 
   .temp-unit {
-    @apply text-2xl font-light text-text-secondary ml-2 align-top;
+    @apply text-xl md:text-2xl font-light text-text-secondary ml-2 align-top;
   }
 
-  /* Weather Info Section */
-  .weather-info {
-    @apply flex flex-col items-center my-8 gap-6;
+  .weather-icon-section {
+    @apply flex-shrink-0;
   }
 
-  .city-icon {
-    @apply w-36 h-36 transition-transform duration-300;
-    filter: 
-      drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15))
-      brightness(1.1)
-      contrast(1.1);
-    animation: float 6s ease-in-out infinite, scaleIn 0.6s ease-out 0.8s both;
-  }
-
-  .city-icon:hover {
-    @apply scale-110 rotate-[5deg];
-  }
-
-  .weather-description {
-    @apply text-xl font-medium text-text-secondary capitalize m-0 tracking-wide;
+  .weather-description-improved {
+    @apply text-2xl md:text-3xl font-medium text-text-primary capitalize m-0 tracking-wide text-center;
+    @apply bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent;
     animation: fadeIn 0.6s ease-out 1s both;
   }
 
-  /* Weather Details Grid */
-  .weather-details-grid {
-    @apply grid grid-cols-2 gap-4 my-8 w-full;
+  /* ----------------------------------------------------------------------------
+    Improved Weather Details Grid with Better Responsive Behavior
+  ---------------------------------------------------------------------------- */
+  .weather-details-improved {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-8 w-full;
+  }
+
+  .detail-card-improved {
+    @apply flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 backdrop-blur-sm;
+    @apply bg-white/5 border border-white/8 hover:bg-white/10 hover:border-white/15 hover:-translate-y-1;
+    @apply hover:shadow-lg;
   }
 
   .detail-card {
@@ -205,7 +244,26 @@
     @apply text-base text-text-primary font-semibold;
   }
 
-  /* Refresh Status */
+  /* ----------------------------------------------------------------------------
+    Minimized Refresh Status for Better Visual Hierarchy
+  ---------------------------------------------------------------------------- */
+  .refresh-status-minimal {
+    @apply flex items-center justify-center w-8 h-8 rounded-full bg-accent-blue/10 border border-accent-blue/20;
+    animation: fadeIn 0.6s ease-out 1.2s both;
+  }
+
+  .status-indicator-minimal {
+    @apply w-3 h-3 bg-green-400 rounded-full shadow-green-400/60;
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 6px rgba(129, 199, 132, 0.6);
+  }
+
+  .spinner-minimal {
+    @apply w-4 h-4 border-2 border-accent-blue/30 border-t-accent-blue rounded-full;
+    animation: spin 1s linear infinite;
+  }
+
+  /* Original refresh status for backward compatibility */
   .refresh-status {
     @apply flex flex-col items-center rounded-3xl py-4 px-6 my-6 text-sm backdrop-blur-sm bg-accent-blue/10 border border-accent-blue/20 text-accent-blue;
     animation: fadeIn 0.6s ease-out 1.2s both;
@@ -305,14 +363,32 @@
   }
 }
 
-/* Responsive Design */
+/* Responsive Design - Improved mobile-first approach */
+@media (max-width: 1024px) {
+  .dashboard-main {
+    @apply flex-col gap-6;
+  }
+  
+  .secondary-content-section {
+    @apply lg:w-full;
+  }
+  
+  .temperature-icon-section {
+    @apply gap-6;
+  }
+}
+
 @media (max-width: 768px) {
   .main-container    { @apply p-4 min-h-screen; }
-  .weather-card      { @apply p-6 rounded-2xl max-w-full; }
-  .city-temp         { @apply text-5xl; }
-  .city-name         { @apply text-2xl flex-col gap-3; }
-  .weather-details-grid { @apply grid-cols-1 gap-3 my-6; }
-  .detail-card       { @apply p-3; }
+  .dashboard-header  { @apply mb-6; }
+  .weather-card      { @apply p-6 rounded-2xl; }
+  .city-temp-improved { @apply text-5xl; }
+  .city-name         { @apply text-2xl flex-col gap-2; }
+  .city-status-header { @apply flex-col gap-3 items-start; }
+  .temperature-icon-section { @apply flex-col gap-4; }
+  .weather-description-improved { @apply text-xl; }
+  .weather-details-improved { @apply grid-cols-1 gap-3 mt-6; }
+  .detail-card-improved { @apply p-3; }
   .welcome-content   { @apply p-6 mx-2; }
   .welcome-content h2 { @apply text-lg; }
   .welcome-content p { @apply text-base; }
@@ -322,24 +398,50 @@
   .feature-icon      { @apply text-xl; }
 }
 
+@media (max-width: 640px) {
+  .city-name {
+    @apply text-xl items-center;
+  }
+  
+  .country-badge {
+    @apply text-xs py-1 px-2;
+  }
+  
+  .city-temp-improved {
+    @apply text-4xl;
+  }
+  
+  .weather-description-improved {
+    @apply text-lg;
+  }
+  
+  .temperature-icon-section {
+    @apply gap-3;
+  }
+}
+
 @media (max-width: 480px) {
   .main-container {
-    @apply p-4;
+    @apply p-3;
+  }
+  
+  .dashboard-header {
+    @apply mb-4;
   }
   
   .weather-card {
-    @apply p-6 rounded-xl;
+    @apply p-4 rounded-xl;
   }
   
-  .city-temp {
-    @apply text-5xl;
+  .city-temp-improved {
+    @apply text-4xl;
   }
   
-  .weather-details-grid {
-    @apply my-6;
+  .weather-details-improved {
+    @apply mt-4;
   }
   
-  .detail-card {
+  .detail-card-improved {
     @apply p-3 gap-3;
   }
   
@@ -356,11 +458,11 @@
   }
   
   .welcome-content {
-    @apply p-6 mx-2;
+    @apply p-4 mx-2;
   }
   
   .welcome-content h2 {
-    @apply text-xl;
+    @apply text-lg;
   }
   
   .welcome-content p {
@@ -368,11 +470,11 @@
   }
   
   .welcome-icon {
-    @apply w-14 h-14 p-4 mb-6;
+    @apply w-12 h-12 p-3 mb-4;
   }
   
   .welcome-icon svg {
-    @apply w-7 h-7;
+    @apply w-6 h-6;
   }
   
   .feature-item {
@@ -380,7 +482,7 @@
   }
   
   .feature-icon {
-    @apply text-xl;
+    @apply text-lg;
   }
 }
 
